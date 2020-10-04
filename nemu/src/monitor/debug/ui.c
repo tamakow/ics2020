@@ -38,6 +38,10 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+static int cmd_si(char *args);
+//static int cmd_info(char *args);
+//static int cmd_x(char *args);
+
 
 static struct {
   char *name;
@@ -47,7 +51,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  {"si", "Step one instruction exactly", cmd_si },
+//  {"info", "Show things about the program being debugged", cmd_info },
+//  {"x", "Scan memory", cmd_x }
   /* TODO: Add more commands */
 
 };
@@ -74,6 +80,23 @@ static int cmd_help(char *args) {
     }
     printf("Unknown command '%s'\n", arg);
   }
+  return 0;
+}
+
+static int cmd_si(char *args){
+  char *arg = strtok(NULL, " ");
+  int num = 0;
+
+  if(arg == NULL){
+    cpu_exec(1);
+	return 0;
+  }
+  sscanf(arg, "%d" , &num);
+  if(num < 0){
+    printf("Please input a legal number\n");
+    return 0;
+  }
+  cpu_exec(num);
   return 0;
 }
 
