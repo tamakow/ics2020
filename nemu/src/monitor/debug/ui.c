@@ -39,7 +39,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 static int cmd_si(char *args);
-//static int cmd_info(char *args);
+static int cmd_info(char *args);
 //static int cmd_x(char *args);
 
 
@@ -52,7 +52,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si", "Step one instruction exactly", cmd_si },
-//  {"info", "Show things about the program being debugged", cmd_info },
+  {"info", "Show things about the program being debugged", cmd_info },
 //  {"x", "Scan memory", cmd_x }
   /* TODO: Add more commands */
 
@@ -98,6 +98,21 @@ static int cmd_si(char *args){
   }
   cpu_exec(num);
   return 0;
+}
+
+static int cmd_info(char *args){
+	char *arg = strtok(NULL," ");
+
+	if(strcmp(arg,"r") == 0){ 	
+		isa_reg_display();
+	}
+	else if(strcmp(arg,"w") == 0){
+		//Something to do here
+	}
+	else{
+		printf("Please input a legal instruction\n");
+	}
+	return 0;
 }
 
 void ui_mainloop() {
