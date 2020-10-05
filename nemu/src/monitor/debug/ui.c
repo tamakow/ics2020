@@ -140,9 +140,9 @@ static int cmd_x(char *args){
 
 	int i,j;
 	for( i = 0 ; i < N; ++ i){
-		printf("0x%08x: ", add + 4 * i);
+		printf("0x%08x:  ", add + 4 * i);
 		for( j = 3 ; j >= 0 ; -- j){
-		  printf("0x%02x",vaddr_read(add + i * 4 + j , 1 ));
+		  printf("0x%02x ",vaddr_read(add + i * 4 + j , 1 ));
 		}
 		printf("\n");
 	}
