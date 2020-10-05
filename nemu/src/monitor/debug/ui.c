@@ -137,11 +137,15 @@ static int cmd_x(char *args){
 	}
 	uint32_t add = 0;//vaddr_t add = 0;
    	sscanf(v, "%x" , &add);
-    printf("add: %x\n",add);
-	int i;
+
+	int i,j;
 	for( i = 0 ; i < N; ++ i){
-	  printf("0x%x\n",vaddr_read(add + i * 4 , 4 ));
+		printf("0x%08x: ", add + 4 * i);
+		for( j = 3 ; j >= 0 ; -- j){
+		  printf("0x%x\n",vaddr_read(add + i * 4 + j , 1 ));
+		}
 	}
+
 	return 0;
 }
 
