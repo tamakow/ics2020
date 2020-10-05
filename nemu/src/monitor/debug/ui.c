@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <memory/vaddr.h>
 void cpu_exec(uint64_t);
 int is_batch_mode();
 
@@ -40,7 +40,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
-//static int cmd_x(char *args);
+static int cmd_x(char *args);
 
 
 static struct {
@@ -53,7 +53,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si", "Step one instruction exactly", cmd_si },
   {"info", "Show things about the program being debugged", cmd_info },
-//  {"x", "Scan memory", cmd_x }
+  {"x", "Scan memory", cmd_x }
   /* TODO: Add more commands */
 
 };
@@ -116,6 +116,31 @@ static int cmd_info(char *args){
 	}
 	else{
 		printf("Please input a legal instruction\n");
+	}
+	return 0;
+}
+
+static int cmd_x(char *args){
+	char *arg = strtok(NULL, " ");
+	int N = 0;
+
+	if(arg == NULL){
+	  printf("Please input a legal instruction\n");
+	  return 0;
+	}
+    sscanf(arg, "%d" , &N);
+
+	char *v = strtok(NULL, " ");//get the start address
+	if(v == NULL){	
+	  printf("Please input a legal instruction\n");
+	  return 0;
+	}
+	uint32_t add = 0;//vaddr_t add = 0;
+   	sscanf(v, "%x" , &add);
+
+	int i;
+	for( i = 0 ; i < N; ++ i){
+	  printf("0x%x\n",vaddr_read(add + i * 4 , 4 ));
 	}
 	return 0;
 }
