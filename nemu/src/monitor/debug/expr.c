@@ -86,11 +86,53 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+			case 256: {
+						TODO();
+						break;
+					  }
+
+			case 257: {
+						tokens[nr_token].type=257;
+						strcpy(tokens[nr_token].str,"==");
+						break;
+					  }
+
+			case 40: {
+						tokens[nr_token].type=40;
+						break;
+					 }
+
+			case 41: {
+						tokens[nr_token].type=41;
+						break;
+					 }
+
+			case 42: {
+						tokens[nr_token].type=42;
+						break;
+					 }
+
+
+			case 43: {
+						tokens[nr_token].type=43;
+						break;
+					 }
+
+			case 45: {
+						tokens[nr_token].type=45;
+						break;
+					 }
+
+			case 47: {
+						tokens[nr_token].type=47;
+						break;
+					 }
+
           default: TODO();
         }
-
+		nr_token++;
         break;
-      }
+	  }      
     }
 
     if (i == NR_REGEX) {
