@@ -87,7 +87,7 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
 			case 256: {
-						TODO();
+						nr_token--;
 						break;
 					  }
 
@@ -128,7 +128,10 @@ static bool make_token(char *e) {
 						break;
 					 }
 
-          default: TODO();
+            default: {
+						nr_token--;
+						break;
+				     }
         }
 		nr_token++;
         break;
