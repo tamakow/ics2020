@@ -197,6 +197,7 @@ int find_main_operator(int p,int q){
 		  if(num == 0) break;
 		  i++;
 		}
+		if(i > q) assert(0);
 	  }
 	  else if(judge_operator(i)){
 	    if(judge_operator(i) <= rank){
@@ -211,7 +212,7 @@ int find_main_operator(int p,int q){
 
 int eval(int p,int q){
 	if(p > q){
-	  return 0;
+	  assert(0);
 	}
 	else if(p == q){
 	  int num;
