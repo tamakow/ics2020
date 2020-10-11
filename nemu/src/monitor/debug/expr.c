@@ -173,6 +173,37 @@ bool check_parentheses(int p,int q){
 	return false;
 }
 
+int judge_operator(int i){
+	if(tokens[i].type == '+' || tokens[i].type == '-')
+		return 1;   
+	if(tokens[i].type == '*' || tokens[i].type == '/' )
+		return 2;
+	else return 0;
+}
+
+int find_main_operator(int p,int q){
+	int op=p;
+	int rank=3;
+	int i;
+	for(i = p;i <= q;++i){
+	  if(tokens[i].type == '('){
+		while(i <= q && tokens[i].type != ')'){
+		  i++;
+		}
+		i--;
+		continue;
+	  }
+	  else if(judge_operator(i)){
+	    if(judge_operator(i) <= rank){
+		  rank=judge_operator(i);
+		  op=i;
+		}
+	  }
+	  else continue;
+	}
+	return op;
+}
+
 int eval(int p,int q){
 	if(p > q){
 	  assert(0);
@@ -186,7 +217,7 @@ int eval(int p,int q){
 	  return eval(p+1,q-1);
 	}
 	else{
-	  int op = p;//TODO to find the main 
+	  int op = find_main_operator(p,q);//TODO to find the main 
 	  int val1 = eval(p , op - 1);
 	  int val2 = eval(op + 1, q);
 
