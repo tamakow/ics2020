@@ -220,7 +220,7 @@ int eval(int p,int q){
 	  int op = find_main_operator(p,q);//TODO to find the main 
 	  int val1 = eval(p , op - 1);
 	  int val2 = eval(op + 1, q);
-
+	  printf("%d %d\n",val1,val2);
 	  switch(tokens[op].type){
 		  case '+': return val1+val2;
 		  case '-': return val1-val2;
