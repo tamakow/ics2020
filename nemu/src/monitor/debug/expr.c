@@ -179,6 +179,7 @@ int eval(int p,int q){
 	}
 	else if(p == q){
 	  int num;
+	  printf("%s\n",tokens[p].str);
 	  num=sscanf(tokens[p].str,"%d",&num);
 	  return num;
 	}
@@ -207,6 +208,6 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  printf("%d\n",nr_token);//delete after debuggging
+ // printf("%d\n",nr_token);//delete after debuggging
   return eval(0,nr_token-1);
 }
