@@ -186,7 +186,7 @@ int find_main_operator(int p,int q){
 	int op=p;
 	int rank=3;
 	int i;
-	for(i = p + 1;i <= q;++i){
+	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
 		while(i <= q && tokens[i].type != ')'){
 		  i++;
@@ -194,7 +194,7 @@ int find_main_operator(int p,int q){
 		i--;
 		continue;
 	  }
-	  else if(judge_operator(i) && !judge_operator(i-1)){
+	  else if(judge_operator(i)){
 	    if(judge_operator(i) <= rank){
 		  rank=judge_operator(i);
 		  op=i;
