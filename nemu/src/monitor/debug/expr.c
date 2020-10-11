@@ -149,9 +149,49 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
-bool check_parentheses(int p,int q);
+bool check_parentheses(int p,int q){
+	if(tokens[p].type != '(') return false;
+	int num = 1; //record the number of unmatched left_parentheses
+	int i;
+	for(i = p + 1;i <= q;++ i){
+		if(tokens[i].type == '('){
+		  num++;
+		}
+		else if(tokens[i].type == ')'){
+		  num--;
+		  if(num == 0 && i != q) return false; 
+		}
+	}
+	if(num == 0) return true;
+	return false;
+}
 
-int eval(int p,int q);
+int eval(int p,int q){
+	if(p > q){
+	  assert(0);
+	}
+	else if(p == q){
+	  int num;
+	  num=sscanf(tokens[p].str,"%d",&num);
+	  return num;
+	}
+	else if(check_parentheses(p,q)==true){
+	  return eval(p+1,q-1);
+	}
+	else{
+	  int op = p;//TODO to find the main 
+	  int val1 = eval(p , op - 1);
+	  int val2 = eval(op + 1, q);
+
+	  switch(tokens[op].type){
+		  case '+': return val1+val2;
+		  case '-': return val1-val2;
+		  case '*': return val1*val2;
+		  case '/': return val1/val2;
+		  default: assert(0);
+	  }
+	}
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -160,7 +200,5 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
-  return 0;
+  return eval(0,nr_token);
 }

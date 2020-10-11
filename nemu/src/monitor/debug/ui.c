@@ -41,7 +41,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
-//static int cmd_p(char *args);
+static int cmd_p(char *args);
 
 static struct {
   char *name;
@@ -54,7 +54,7 @@ static struct {
   {"si", "Step one instruction exactly", cmd_si },
   {"info", "Show things about the program being debugged", cmd_info },
   {"x", "Scan memory", cmd_x },
-  //{"p", "Expression evaluation", cmd_p},
+  {"p", "Expression evaluation", cmd_p},
   /* TODO: Add more commands */
 
 };
@@ -149,6 +149,20 @@ static int cmd_x(char *args){
 	}
 
 	return 0;
+}
+
+static int cmd_p(char *args){
+	char *arg = strtok(NULL, " ");
+	bool success = true;
+	int ans = expr(arg, &success);
+	if(success == 0){
+		printf("can not make_tokens successfully.\n");
+		return 0;
+	}
+	else{
+		printf("%d\n",ans);
+		return 0;
+	}
 }
 
 void ui_mainloop() {
