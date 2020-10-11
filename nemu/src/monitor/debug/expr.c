@@ -207,7 +207,7 @@ int find_main_operator(int p,int q){
 
 int eval(int p,int q){
 	if(p > q){
-	  assert(0);
+	  return 0;
 	}
 	else if(p == q){
 	  int num;
