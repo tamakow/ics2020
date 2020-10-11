@@ -17,7 +17,7 @@
 #define LOG_END   (1024 * 1024 * 50)
 
 CPU_state cpu = {};
-NEMUState nemu_state = { .state = NEMU_STOP };
+NEMUState nemu_state = { .state = NEMU_QUIT };
 static uint64_t g_nr_guest_instr = 0;
 static uint64_t g_timer = 0; // unit: ms
 const rtlreg_t rzero = 0;
