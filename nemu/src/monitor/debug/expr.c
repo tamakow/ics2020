@@ -179,8 +179,8 @@ int eval(int p,int q){
 	}
 	else if(p == q){
 	  int num;
-	  printf("%s\n",tokens[p].str);
 	  num=sscanf(tokens[p].str,"%d",&num);
+	  printf("%d\n",num);
 	  return num;
 	}
 	else if(check_parentheses(p,q)==true){
