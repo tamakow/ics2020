@@ -198,7 +198,6 @@ int find_main_operator(int p,int q){
 		  i++;
 		}
 		if(i > q) assert(0);
-		continue;
 	  }
 	  else if(judge_operator(i)){
 	    if(judge_operator(i) <= rank){
