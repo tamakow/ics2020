@@ -95,6 +95,7 @@ static bool make_token(char *e) {
 
 			case 258 :{
 					    tokens[nr_token].type=258;
+						memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;
 						break;
