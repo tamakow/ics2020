@@ -189,7 +189,6 @@ int find_main_operator(int p,int q){
 	int num=0;
 	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
-		num++;
 		while(i <= q){
 		  if(tokens[i].type == '(')
 			  num++;
