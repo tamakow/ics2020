@@ -41,7 +41,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
-
+//static int cmd_p(char *args);
 
 static struct {
   char *name;
@@ -53,7 +53,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si", "Step one instruction exactly", cmd_si },
   {"info", "Show things about the program being debugged", cmd_info },
-  {"x", "Scan memory", cmd_x }
+  {"x", "Scan memory", cmd_x },
+  //{"p", "Expression evaluation", cmd_p},
   /* TODO: Add more commands */
 
 };

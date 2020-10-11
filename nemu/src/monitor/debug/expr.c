@@ -147,6 +147,11 @@ static bool make_token(char *e) {
   return true;
 }
 
+// from here I will implement eval,check_parentheses and so on
+
+bool check_parentheses(int p,int q);
+
+int eval(int p,int q);
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
