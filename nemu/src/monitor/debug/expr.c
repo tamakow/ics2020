@@ -29,7 +29,7 @@ static struct rule {
   {"/",  '/'},          // divide
   {"\\+", '+'},         // plus
   {"-", '-'},           // minus
-  {"[0-9]{1,10}",TK_NUM}, // numbers
+  {"[0-9]+",TK_NUM}, // numbers
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -86,53 +86,53 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-			case 257: {
-						tokens[nr_token].type=257;
+			case TK_EQ: {
+						tokens[nr_token].type=TK_EQ;
 						strcpy(tokens[nr_token].str,"==");
 						nr_token++;
 						break;
 					  }
 
-			case 258 :{
-					    tokens[nr_token].type=258;
+			case TK_NUM :{
+					    tokens[nr_token].type=TK_NUM;
 						memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;
 						break;
 					  }
 
-			case 40: {
+			case '(': {
 						tokens[nr_token].type=40;
 						nr_token++;
 						break;
 					 }
 
-			case 41: {
+			case ')': {
 						tokens[nr_token].type=41;
 						nr_token++;
 						break;
 					 }
 
-			case 42: {
+			case '*': {
 						tokens[nr_token].type=42;
 						nr_token++;
 						break;
 					 }
 
 
-			case 43: {
+			case '+': {
 						tokens[nr_token].type=43;
 						nr_token++;
 						break;
 					 }
 
-			case 45: {
+			case '-': {
 						tokens[nr_token].type=45;
 						nr_token++;
 						break;
 					 }
 
-			case 47: {
+			case '/': {
 						tokens[nr_token].type=47;
 						nr_token++;
 						break;
@@ -210,7 +210,7 @@ int find_main_operator(int p,int q){
 	return op;
 }
 
-int eval(int p,int q){
+u_int32_t eval(int p,int q){
 	if(p > q){
 	  assert(0);
 	}

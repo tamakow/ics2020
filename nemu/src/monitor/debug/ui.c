@@ -152,10 +152,8 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
-	char *arg = strtok(NULL, " ");
-	if(arg == NULL) return 0;
 	bool success = true;
-	int ans = expr(arg, &success);
+	uint32_t ans = expr(args, &success);
 	if(success == 0){
 		printf("can not make_tokens successfully.\n");
 		return 0;
