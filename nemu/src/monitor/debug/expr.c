@@ -166,7 +166,6 @@ int find_main_operator(int p,int q){
 		if(i > q) assert(0);
 	  }
 	  else if(judge_operator(i) > 0 && judge_operator(i) <= rank){
-		  if(tokens[i].type=='-'&&judge_operator(i-1)) continue;
 		  rank=judge_operator(i);
 		  op=i;
 	  }
