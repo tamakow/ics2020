@@ -228,7 +228,7 @@ uint32_t eval(int p,int q){
 	  if(q - p == 1 && tokens[p].type == '-'){
 	    return 0 - eval(q,q);
 	  }
-	  uint32_t op = find_main_operator(p,q);//TODO to find the main 
+	  int op = find_main_operator(p,q);//TODO to find the main 
 	  uint32_t val1 = eval(p , op - 1);
 	  uint32_t val2 = eval(op + 1, q);
 	  switch(tokens[op].type){
