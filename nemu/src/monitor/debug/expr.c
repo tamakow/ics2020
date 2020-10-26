@@ -157,10 +157,10 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
-bool check_parentheses(int p,int q){
+bool check_parentheses(u_int32_t p,u_int32_t q){
 	if(tokens[p].type != '(') return false;
 	int num = 1; //record the number of unmatched left_parentheses
-	int i;
+	u_int32_t i;
 	for(i = p + 1;i <= q;++ i){
 		if(tokens[i].type == '('){
 		  num++;
@@ -174,7 +174,7 @@ bool check_parentheses(int p,int q){
 	return false;
 }
 
-int judge_operator(int i){
+int judge_operator(uint32_t i){
 	if(tokens[i].type == '+' || tokens[i].type == '-')
 		return 1;   
 	if(tokens[i].type == '*' || tokens[i].type == '/' )
@@ -182,10 +182,10 @@ int judge_operator(int i){
 	else return 0;
 }
 
-int find_main_operator(int p,int q){
-	int op=p;
+uint32_t find_main_operator(uint32_t p,uint32_t q){
+	uint32_t op=p;
 	int rank=3;
-	int i;
+	uint32_t i;
 	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
 		int num=0;
@@ -212,13 +212,13 @@ int find_main_operator(int p,int q){
 	return op;
 }
 
-u_int32_t eval(int p,int q){
+uint32_t eval(uint32_t p,uint32_t q){
 	if(p > q){
 	  assert(0);
 	}
 	else if(p == q){
-	  u_int32_t num;
-	  sscanf(tokens[p].str,"%u",&num);
+	  int num;
+	  sscanf(tokens[p].str,"%d",&num);
 	  return num;
 	}
 	else if(check_parentheses(p,q)==true){
@@ -229,8 +229,8 @@ u_int32_t eval(int p,int q){
 	    return 0 - eval(q,q);
 	  }
 	  int op = find_main_operator(p,q);//TODO to find the main 
-	  u_int32_t val1 = eval(p , op - 1);
-	  u_int32_t val2 = eval(op + 1, q);
+	  uint32_t val1 = eval(p , op - 1);
+	  uint32_t val2 = eval(op + 1, q);
 	  switch(tokens[op].type){
 		  case '+': return val1+val2;
 		  case '-': return val1-val2;
