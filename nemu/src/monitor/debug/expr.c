@@ -97,7 +97,12 @@ static bool make_token(char *e) {
 			case TK_NUM :{
 						//memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
 						tokens[nr_token].type = rules[i].token_type;
-						strncpy(tokens[nr_token].str,substr_start,substr_len);
+						//strncpy(tokens[nr_token].str,substr_start,substr_len);
+						int j;
+						for(j=0;j<substr_len;++j){
+							tokens[nr_token].str[j] = e[position-substr_len+j];
+						}
+						tokens[nr_token].str[j]='\0';
 						nr_token++;
 						break;
 					  }
@@ -176,7 +181,7 @@ int find_main_operator(int p,int q){
 
 int eval(int p,int q){
 	if(p > q){
-		return 0;
+		assert(0);
 	}
 	else if(p == q){
 	  int num;
