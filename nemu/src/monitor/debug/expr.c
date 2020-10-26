@@ -86,59 +86,24 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+			case TK_NOTYPE: break;
 			case TK_EQ: {
-						tokens[nr_token].type=TK_EQ;
+						tokens[nr_token].type = rules[i].token_type;
 						strcpy(tokens[nr_token].str,"==");
 						nr_token++;
 						break;
 					  }
 
 			case TK_NUM :{
-					    tokens[nr_token].type=TK_NUM;
-						memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
+						//memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
+						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;
 						break;
 					  }
-
-			case '(': {
-						tokens[nr_token].type=40;
-						nr_token++;
-						break;
-					 }
-
-			case ')': {
-						tokens[nr_token].type=41;
-						nr_token++;
-						break;
-					 }
-
-			case '*': {
-						tokens[nr_token].type=42;
-						nr_token++;
-						break;
-					 }
-
-
-			case '+': {
-						tokens[nr_token].type=43;
-						nr_token++;
-						break;
-					 }
-
-			case '-': {
-						tokens[nr_token].type=45;
-						nr_token++;
-						break;
-					 }
-
-			case '/': {
-						tokens[nr_token].type=47;
-						nr_token++;
-						break;
-					 }
-
             default: {
+						tokens[nr_token].type = rules[i].token_type;
+						nr_token++;
 						break;
 				     }
         }
@@ -157,7 +122,7 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
-bool check_parentheses(int p,u_int q){
+bool check_parentheses(int p,int q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
 	int num = 1; //record the number of unmatched left_parentheses
 	int i;
@@ -212,12 +177,12 @@ int find_main_operator(int p,int q){
 	return op;
 }
 
-uint32_t eval(int p,int q){
+int eval(int p,int q){
 	if(p > q){
 	  assert(0);
 	}
 	else if(p == q){
-	  uint32_t num;
+	  int num;
 	  sscanf(tokens[p].str,"%u",&num);
 	  return num;
 	}
@@ -230,8 +195,8 @@ uint32_t eval(int p,int q){
 	  }
 	  else if(tokens[p].type=='-'&&tokens[p+1].type=='('&&tokens[q].type==')') return 0-eval(p+1,q);
 	  int op = find_main_operator(p,q);//TODO to find the main 
-	  uint32_t val1 = eval(p , op - 1);
-	  uint32_t val2 = eval(op + 1, q);
+	  int val1 = eval(p , op - 1);
+	  int val2 = eval(op + 1, q);
 	  switch(tokens[op].type){
 		  case '+': return val1+val2;
 		  case '-': return val1-val2;
