@@ -217,7 +217,7 @@ u_int32_t eval(int p,int q){
 	  assert(0);
 	}
 	else if(p == q){
-	  int num;
+	  u_int32_t num;
 	  sscanf(tokens[p].str,"%u",&num);
 	  return num;
 	}
