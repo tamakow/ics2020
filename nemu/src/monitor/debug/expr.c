@@ -182,7 +182,7 @@ int judge_operator(int i){
 	else return 0;
 }
 
-uint32_t find_main_operator(uint32_t p,uint32_t q){
+int find_main_operator(int p,int q){
 	int op=p;
 	int rank=3;
 	int i;
@@ -219,7 +219,7 @@ uint32_t eval(int p,int q){
 	else if(p == q){
 	  int num;
 	  sscanf(tokens[p].str,"%d",&num);
-	  return num;
+	  return (uint32_t)num;
 	}
 	else if(check_parentheses(p,q)==true){
 	  return eval(p+1,q-1);
