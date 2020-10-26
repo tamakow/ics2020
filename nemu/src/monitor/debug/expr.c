@@ -229,8 +229,8 @@ u_int32_t eval(int p,int q){
 	    return 0 - eval(q,q);
 	  }
 	  int op = find_main_operator(p,q);//TODO to find the main 
-	  int val1 = eval(p , op - 1);
-	  int val2 = eval(op + 1, q);
+	  u_int32_t val1 = eval(p , op - 1);
+	  u_int32_t val2 = eval(op + 1, q);
 	  switch(tokens[op].type){
 		  case '+': return val1+val2;
 		  case '-': return val1-val2;
