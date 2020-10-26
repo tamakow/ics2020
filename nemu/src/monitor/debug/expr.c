@@ -58,7 +58,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[65536] __attribute__((used)) = {};
+static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -157,10 +157,10 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
-bool check_parentheses(u_int32_t p,u_int32_t q){
-	if(tokens[p].type != '(') return false;
+bool check_parentheses(int p,u_int q){
+	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
 	int num = 1; //record the number of unmatched left_parentheses
-	u_int32_t i;
+	int i;
 	for(i = p + 1;i <= q;++ i){
 		if(tokens[i].type == '('){
 		  num++;
@@ -174,7 +174,7 @@ bool check_parentheses(u_int32_t p,u_int32_t q){
 	return false;
 }
 
-int judge_operator(uint32_t i){
+int judge_operator(int i){
 	if(tokens[i].type == '+' || tokens[i].type == '-')
 		return 1;   
 	if(tokens[i].type == '*' || tokens[i].type == '/' )
@@ -183,9 +183,9 @@ int judge_operator(uint32_t i){
 }
 
 uint32_t find_main_operator(uint32_t p,uint32_t q){
-	uint32_t op=p;
+	int op=p;
 	int rank=3;
-	uint32_t i;
+	int i;
 	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
 		int num=0;
@@ -212,7 +212,7 @@ uint32_t find_main_operator(uint32_t p,uint32_t q){
 	return op;
 }
 
-uint32_t eval(uint32_t p,uint32_t q){
+uint32_t eval(int p,int q){
 	if(p > q){
 	  assert(0);
 	}
@@ -228,7 +228,7 @@ uint32_t eval(uint32_t p,uint32_t q){
 	  if(q - p == 1 && tokens[p].type == '-'){
 	    return 0 - eval(q,q);
 	  }
-	  int op = find_main_operator(p,q);//TODO to find the main 
+	  uint32_t op = find_main_operator(p,q);//TODO to find the main 
 	  uint32_t val1 = eval(p , op - 1);
 	  uint32_t val2 = eval(op + 1, q);
 	  switch(tokens[op].type){
