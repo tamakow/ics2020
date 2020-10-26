@@ -217,16 +217,16 @@ uint32_t eval(int p,int q){
 	  assert(0);
 	}
 	else if(p == q){
-	  int num;
-	  sscanf(tokens[p].str,"%d",&num);
-	  return (uint32_t)num;
+	  uint32_t num;
+	  sscanf(tokens[p].str,"%u",&num);
+	  return num;
 	}
 	else if(check_parentheses(p,q)==true){
 	  return eval(p+1,q-1);
 	}
 	else{
 	  if(q - p == 1 && tokens[p].type == '-'){
-	    return -eval(q,q);
+	    return 0 - eval(q,q);
 	  }
 	  int op = find_main_operator(p,q);//TODO to find the main 
 	  uint32_t val1 = eval(p , op - 1);
