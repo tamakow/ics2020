@@ -226,7 +226,7 @@ uint32_t eval(int p,int q){
 	}
 	else{
 	  if(q - p == 1 && tokens[p].type == '-'){
-	    return 0 - eval(q,q);
+	    return -eval(q,q);
 	  }
 	  int op = find_main_operator(p,q);//TODO to find the main 
 	  uint32_t val1 = eval(p , op - 1);
