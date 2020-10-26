@@ -159,7 +159,7 @@ static int cmd_p(char *args){
 		return 0;
 	}
 	else{
-		printf("%d\n",ans);
+		printf("%u\n",ans);
 		return 0;
 	}
 }
