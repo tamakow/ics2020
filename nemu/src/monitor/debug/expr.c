@@ -153,24 +153,21 @@ int find_main_operator(int p,int q){
 	int i;
 	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
-		int num=0;
-		while(i <= q){
+		int num=1;
+		i++;
+		while(num!=0){
 		  if(tokens[i].type == '(')
 			  num++;
 		  else if(tokens[i].type == ')')
 			  num--;
-		  if(num == 0) break;
 		  i++;
 		}
+		i--;
 		if(i > q) assert(0);
 	  }
-	  else if(judge_operator(i)){
-        if(i==p&&tokens[i].type=='-') continue;
-		else if(i>p&&(judge_operator(i-1)||tokens[i-1].type=='(')&&tokens[i].type=='-') continue;
-	    else if(judge_operator(i) <= rank){
+	  else if(judge_operator(i) > 0 && judge_operator(i) <= rank){
 		  rank=judge_operator(i);
 		  op=i;
-		}
 	  }
 	  else continue;
 	}
@@ -183,17 +180,14 @@ int eval(int p,int q){
 	}
 	else if(p == q){
 	  int num;
-	  sscanf(tokens[p].str,"%u",&num);
+	  sscanf(tokens[p].str,"%d",&num);
 	  return num;
 	}
 	else if(check_parentheses(p,q)==true){
 	  return eval(p+1,q-1);
 	}
 	else{
-	  if(q - p == 1 && tokens[p].type == '-'){
-	    return 0 - eval(q,q);
-	  }
-	  else if(tokens[p].type=='-'&&tokens[p+1].type=='('&&tokens[q].type==')') return 0-eval(p+1,q);
+	  if(tokens[p].type=='-') return 0-eval(p+1,q);
 	  int op = find_main_operator(p,q);//TODO to find the main 
 	  int val1 = eval(p , op - 1);
 	  int val2 = eval(op + 1, q);
