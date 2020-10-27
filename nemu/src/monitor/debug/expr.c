@@ -181,6 +181,7 @@ int find_main_operator(int p,int q){
 
 int eval(int p,int q){
 	if(p > q){
+		printf("%d %d\n",p,q);
 		assert(0);
 	}
 	else if(p == q){
