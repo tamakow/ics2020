@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_NUM,
+  TK_NOTYPE = 256, TK_EQ,TK_NUM,TK_NEG,
 
   /* TODO: Add more token types */
 
@@ -106,6 +106,13 @@ static bool make_token(char *e) {
 						nr_token++;
 						break;
 					  }
+			case '-': {
+						if(nr_token==0 || (tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
+							tokens[nr_token].type = TK_NEG;
+							nr_token++;
+							break;
+						}
+			}
             default: {
 						tokens[nr_token].type = rules[i].token_type;
 						nr_token++;
@@ -193,7 +200,7 @@ int eval(int p,int q){
 	  return eval(p+1,q-1);
 	}
 	else{
-	  if(tokens[p].type=='-') return 0-eval(p+1,q);
+	  if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 	  int op = find_main_operator(p,q);//TODO to find the main 
 	  int val1 = eval(p , op - 1);
 	  int val2 = eval(op + 1, q);
