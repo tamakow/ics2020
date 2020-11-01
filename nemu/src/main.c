@@ -14,7 +14,9 @@ int main(int argc, char *argv[]) {
   FILE* fp = fopen("/home/tamako/ics2020/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);
   int ans=0;
+  int cnt=0;
   while(fscanf(fp,"%d",&ans)==1){
+    cnt++;
     if(ans == -1) continue;
     if(fscanf(fp,"%s",e)==EOF) continue;
     bool success =true;
@@ -25,9 +27,10 @@ int main(int argc, char *argv[]) {
     }
     if(my_ans != ans){
       printf("Wrong answer:my answer is %d, but the true answer is %d\n",my_ans,ans);
-      printf("the test is %s\n",e);
+      printf("the test %d is %s\n",cnt,e);
     }
-    else printf("YES\n");
+    else printf("YES for test %d\n",cnt);
+
   }
   /* Start engine. */
   engine_start();
