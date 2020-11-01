@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   init_monitor(argc, argv);
   char e[1000];
-  FILE* fp = fopen("../tools/gen-expr/input","r");
+  FILE* fp = fopen("/home/tamako/ics2020/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);
   int ans=0;
   while(fscanf(fp,"%d",&ans)==1){
