@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
       printf("Wrong answer:my answer is %d, but the true answer is %d\n",my_ans,ans);
       printf("the test is %s\n",e);
     }
+    else printf("YES\n");
   }
   /* Start engine. */
   engine_start();
