@@ -1,10 +1,9 @@
 //all include is for testing too
-/*
 #include <stdio.h>
 #include <stdlib.h>
 #include "common.h"
 #include "monitor/debug/expr.h"
-*/
+
 
 void init_monitor(int, char *[]);
 void engine_start();
@@ -13,7 +12,7 @@ int is_exit_status_bad();
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   init_monitor(argc, argv);
- /*  //This part is for testing the expr
+ //This part is for testing the expr
   char e[1000];
   FILE* fp = fopen("/home/tamako/ics2020/nemu/tools/gen-expr/input","r");
   assert(fp!=NULL);
@@ -35,7 +34,7 @@ int main(int argc, char *argv[]) {
     else printf("YES for test %d\n",cnt);
 
   }
-  */
+
   /* Start engine. */
   engine_start();
 

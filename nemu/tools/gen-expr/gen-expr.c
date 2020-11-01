@@ -92,8 +92,7 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
 
     int result;
-    if(fscanf(fp, "%d", &result)==EOF) 
-    printf("-1\n");
+    if(fscanf(fp, "%d", &result)==EOF);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
