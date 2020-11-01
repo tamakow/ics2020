@@ -254,10 +254,12 @@ int eval(int p,int q){
 	  	return eval(p+1,q-1);
 	}
 	else{
-	  	if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-		else if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
-	  	int op = find_main_operator(p,q);//TODO to find the main 
+	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
+		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
+	  	int op = find_main_operator(p,q);//TODO to find the main
+        if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 	  	int val1 = eval(p , op - 1);
+
 	  	int val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){
