@@ -259,7 +259,6 @@ int eval(int p,int q){
 	  	int op = find_main_operator(p,q);//TODO to find the main
         if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 	  	int val1 = eval(p , op - 1);
-
 	  	int val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){

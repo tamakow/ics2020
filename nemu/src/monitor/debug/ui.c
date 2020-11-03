@@ -42,6 +42,8 @@ static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
 static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
 
 static struct {
   char *name;
@@ -51,12 +53,13 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  {"si", "Step one instruction exactly", cmd_si },
-  {"info", "Show things about the program being debugged", cmd_info },
-  {"x", "Scan memory", cmd_x },
-  {"p", "Expression evaluation", cmd_p},
+  { "si", "Step one instruction exactly", cmd_si },
+  { "info", "Show things about the program being debugged", cmd_info },
+  { "x", "Scan memory", cmd_x },
+  { "p", "Expression evaluation", cmd_p},
+  { "w", "set a watchpoint of a expression so that you can see when it changes", cmd_w },
+  { "d", "delete the watchpoint", cmd_d },
   /* TODO: Add more commands */
-
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -113,7 +116,7 @@ static int cmd_info(char *args){
 		isa_reg_display();
 	}
 	else if(strcmp(arg,"w") == 0){
-		//Something to do here
+		print_wp();
 	}
 	else{
 		printf("Please input a legal instruction\n");
@@ -162,6 +165,23 @@ static int cmd_p(char *args){
 		printf("%d\n",ans);
 		return 0;
 	}
+}
+
+static int cmd_w(char *args){
+  if(args == NULL){
+    printf("Please input a expression!\n");
+  }
+  else{
+    new_wp(args);
+  }
+  return 0;
+}
+
+static int cmd_d(char *args){
+  int w_NO=1;
+  sscanf(args,"%d",&w_NO);
+  free_wp(w_NO);
+  return 0;
 }
 
 void ui_mainloop() {
