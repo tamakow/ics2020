@@ -82,7 +82,7 @@ void update_wp_NO(WP* h){
 void free_wp(int w_NO){
   if(head == NULL){
     printf("No watchpoint to delete!\n");
-    assert(0);
+    return;
   }
   WP* to_delete;
   if(head->NO == w_NO){
