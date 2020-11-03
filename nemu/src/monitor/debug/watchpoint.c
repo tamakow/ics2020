@@ -67,7 +67,6 @@ WP* search_wp(int w_NO){
     temp_head=temp_head->next;
   if(temp_head == NULL){
     printf("Can't search the NO.%d watchpoint!\n",w_NO);
-    assert(0);
   }
   return temp_head;
 }
@@ -93,6 +92,7 @@ void free_wp(int w_NO){
   }
   else{
     WP* pre = search_wp(w_NO);
+    if(pre == NULL) return;
     to_delete = pre->next;
     pre->next = to_delete->next;
     update_wp_NO(pre->next);
@@ -129,7 +129,7 @@ void print_wp(){
   printf("Num\t\tNew_value(HEX)\tOld_value(HEX)\tNew_vale(DEC)\tOld_value(DEC)\tExpression\n");
   WP* temp_head = head;
   while(temp_head != NULL){
-    printf("%4d\t\t0X%x\t0X%x\t%d\t%d\t%s",temp_head->NO,temp_head->newvalue,temp_head->oldvalue,temp_head->newvalue,temp_head->oldvalue,temp_head->str);
+    printf("%4d\t\t0X%10x\t0X%10x\t%10d\t%10d\t%s\n",temp_head->NO,temp_head->newvalue,temp_head->oldvalue,temp_head->newvalue,temp_head->oldvalue,temp_head->str);
     temp_head = temp_head->next;
   }
   return;
