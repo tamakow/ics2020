@@ -59,14 +59,11 @@ WP* new_wp(char* s){
 
 WP* search_wp(int w_NO){
   WP* temp_head = head;
-  if(temp_head == NULL){
-    printf("Can't seach the NO.%d watchpoint!\n",w_NO);
-    assert(0);
-  }
-  while(temp_head->next != NULL && temp_head->next->NO != w_NO)
+  while(temp_head != NULL && temp_head->NO != w_NO)
     temp_head=temp_head->next;
-  if(temp_head == NULL){
+  if(temp_head->next == NULL){
     printf("Can't search the NO.%d watchpoint!\n",w_NO);
+    return NULL;
   }
   return temp_head;
 }
@@ -91,7 +88,7 @@ void free_wp(int w_NO){
     update_wp_NO(head);
   }
   else{
-    WP* pre = search_wp(w_NO);
+    WP* pre = search_wp(w_NO);//search_wp has bugs
     if(pre == NULL) return;
     to_delete = pre->next;
     pre->next = to_delete->next;
