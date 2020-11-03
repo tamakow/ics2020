@@ -61,7 +61,7 @@ WP* search_wp(int w_NO){
   WP* temp_head = head;
   while(temp_head != NULL && temp_head->NO != w_NO)
     temp_head=temp_head->next;
-  if(temp_head->next == NULL){
+  if(temp_head == NULL){
     printf("Can't search the NO.%d watchpoint!\n",w_NO);
     return NULL;
   }
