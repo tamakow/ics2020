@@ -228,10 +228,10 @@ uint32_t eval(int p,int q){
 		assert(0);
 	}
 	else if(p == q){
-		uint32_t num;
+		int num;
 		switch(tokens[p].type){
 			case TK_NUM:{
-	  			sscanf(tokens[p].str,"%u",&num);
+	  			sscanf(tokens[p].str,"%d",&num);
 	  			return num;
 			}
 			case TK_HEX:{
