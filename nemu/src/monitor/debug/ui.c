@@ -156,8 +156,8 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
 	bool success = true;
-	int ans = expr(args, &success);
-	if(success == 0){
+	uint32_t ans = expr(args, &success);
+	if(success == false){
 		printf("can not make_tokens successfully.\n");
 		return 0;
 	}
