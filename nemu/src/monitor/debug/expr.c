@@ -129,7 +129,7 @@ static bool make_token(char *e) {
 						break;
 					  }
 			case '-': {
-						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
+						if(nr_token==0 || ( ((tokens[nr_token-1]).type != TK_REG) && ((tokens[nr_token-1]).type != TK_HEX) && ((tokens[nr_token-1]).type !=TK_NUM) && ((tokens[nr_token-1]).type != ')'))){
 							tokens[nr_token].type = TK_NEG;
 							nr_token++;
 							break;
@@ -165,9 +165,9 @@ static bool make_token(char *e) {
 
 bool check_parentheses(int p,int q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
-	int num = 1; //record the number of unmatched left_parentheses
+	int num = 0; //record the number of unmatched left_parentheses
 	int i;
-	for(i = p + 1;i <= q;++ i){
+	for(i = p;i < q;++ i){
 		if(tokens[i].type == '('){
 		  num++;
 		}
@@ -176,8 +176,7 @@ bool check_parentheses(int p,int q){
 		  if(num == 0 && i != q) return false; 
 		}
 	}
-	if(num == 0) return true;
-	return false;
+	return true;
 }
 
 int judge_operator(int i){
@@ -220,7 +219,7 @@ int find_main_operator(int p,int q){
 	return op;
 }
 
-int eval(int p,int q){
+uint32_t eval(int p,int q){
 	if(p > q){
 		printf("%d %d\n",p,q);
 		assert(0);
@@ -252,12 +251,12 @@ int eval(int p,int q){
 	  	return eval(p+1,q-1);
 	}
 	else{
-	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
+	  	if(tokens[p].type==TK_NEG) return -eval(p+1,q);
+		else if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
 	  	int op = find_main_operator(p,q);//TODO to find the main
-        if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-	  	int val1 = eval(p , op - 1);
-	  	int val2 = eval(op + 1, q);
+        //if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
+	  	uint32_t val1 = eval(p , op - 1);
+	  	uint32_t val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){
 		  	case '+': return val1+val2;
@@ -282,5 +281,6 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
  // printf("%d\n",nr_token);//delete after debuggging
+  *success = true;
   return eval(0,nr_token-1);
 }
