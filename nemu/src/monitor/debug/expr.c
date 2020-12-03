@@ -189,8 +189,8 @@ int judge_operator(int i){
 		return 3;   
 	if(tokens[i].type == '*' || tokens[i].type == '/' )
 		return 4;
-
-	else return 0;
+	if(tokens[i].type == TK_NEG) return 6;
+	else return 1000;
 }
 
 int find_main_operator(int p,int q){
@@ -211,7 +211,7 @@ int find_main_operator(int p,int q){
 		i--;
 		if(i > q) assert(0);
 	  }
-	  else if(judge_operator(i) > 0 && judge_operator(i) <= rank){
+	  else if(judge_operator(i) <= rank){
 		  rank=judge_operator(i);
 		  op=i;
 	  }
