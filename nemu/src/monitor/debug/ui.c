@@ -93,17 +93,19 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args){
   char *arg = strtok(NULL, " ");
-  int num = 0;
+  uint64_t num = 0;
 
   if(arg == NULL){
     cpu_exec(1);
 	return 0;
   }
-  sscanf(arg, "%d" , &num);
+  sscanf(arg, "%lu" , &num);
+  /*
   if(num < 0){
     printf("Please input a legal number\n");
     return 0;
   }
+  */
   cpu_exec(num);
   return 0;
 }
