@@ -194,7 +194,7 @@ int judge_operator(int i){
 }
 
 int find_main_operator(int p,int q){
-	int op=p;
+	int op=-1;
 	int rank=100;
 	int i;
 	for(i = p;i <= q;++i){
@@ -255,29 +255,19 @@ uint32_t eval(int p,int q){
 	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
 	  	int op = find_main_operator(p,q);//TODO to find the main
-        //if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-	  	uint32_t val1 = 0;
-	  	uint32_t val2 = 0;
-		if(tokens[op].type != TK_NEG && tokens[op].type != TK_POINT){
-			val1 = eval(p,op-1);
-		}
-		val2 = eval(op+1,q);
+		if(op==-1) assert(0);
+        if(tokens[op].type==TK_NEG) return 0-eval(op+1,q);
+	  	uint32_t val1 = eval(p , op - 1);
+	  	uint32_t val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){
 		  	case '+': return val1+val2;
 		  	case '-': return val1-val2;
 		 	case '*': return val1*val2;
-		  	case '/': 
-			  if(val2==0){
-				  printf("val2 is 0\n");
-				  assert(0);
-				  return 0;
-			  }
-			  else return val1/val2;
+		  	case '/': return val1/val2;
 			case TK_EQ:return val1==val2;
 			case TK_NEQ:return val1!=val2;
 			case TK_AND:return val1&&val2;
-			case TK_NEG:return 0-val2;
 		  	default: assert(0);
 	  	}
 	}
