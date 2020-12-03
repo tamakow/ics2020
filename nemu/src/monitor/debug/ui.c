@@ -6,8 +6,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory/vaddr.h>
+#include <memory/paddr.h>
+
 void cpu_exec(uint64_t);
 int is_batch_mode();
+void QUIT_STATE();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -34,7 +37,8 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  return -1;
+	QUIT_STATE();
+	return -1;
 }
 
 static int cmd_help(char *args);
@@ -121,6 +125,7 @@ static int cmd_info(char *args){
 	else{
 		printf("Please input a legal instruction\n");
 	}
+
 	return 0;
 }
 
