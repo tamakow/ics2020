@@ -282,5 +282,6 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
  // printf("%d\n",nr_token);//delete after debuggging
+  *success = true;
   return eval(0,nr_token-1);
 }
