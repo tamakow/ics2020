@@ -125,3 +125,7 @@ void cpu_exec(uint64_t n) {
       monitor_statistic();
   }
 }
+
+void QUIT_STATE(){
+	nemu_state.state = NEMU_QUIT;
+}
