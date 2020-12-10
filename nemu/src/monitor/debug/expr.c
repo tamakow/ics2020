@@ -1,4 +1,4 @@
-//为了寻找bug是否在check_parenthese 并不会对正确代码进行抄袭
+//这是为了寻找bug是否在check_parenthese 并不会对正确代码进行抄袭
 
 #include <isa.h>
 #include <memory/paddr.h>
@@ -166,6 +166,22 @@ bool check_parentheses(int p,int q){
 	return false;
 }
 
+bool inner_parentheses(int p,int q){
+	int num = 0;
+	int i;
+	for(i = p;i <= q;++ i){
+		if(tokens[i].type == '('){
+		  num++;
+		}
+		else if(tokens[i].type == ')'){
+		  num--;
+		  if(num == 0 && i != q) return false; 
+		}
+	}
+	if(num == 0) return true;
+	return false;
+}
+
 
 uint32_t eval(int p, int q, bool *success){
   if(!(*success))  //错误表达式
@@ -283,7 +299,7 @@ word_t expr(char *e, bool *success) {
       tokens[j].type = TK_DEREF;
     }
   }
-  *success = true;
+  *success = inner_parentheses(0,nr_token-1);
   if(*success)
     return eval(0, nr_token - 1, success);
   else
