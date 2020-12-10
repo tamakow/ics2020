@@ -197,27 +197,11 @@ bool check_parentheses(int p, int q){
   return false;
 }
 
-
-int judge_operator(int i){
-	if(tokens[i].type == TK_AND)
-		return 2;
-	if(tokens[i].type == TK_EQ|| tokens[i].type == TK_NEQ)
-		return 4;
-	if(tokens[i].type == '+' || tokens[i].type == '-')
-		return 8;   
-	if(tokens[i].type == '*' || tokens[i].type == '/' )
-		return 16;
-	//if(tokens[i].type == TK_NEG) return 6;
-	else return 1000;
-}
-
-
 int find_main_operator(int p,int q){
 	int op=-1;
 	int rank=0;
 	int i;
 	for(i = p;i <= q;++i){
-	  /*
     switch (tokens[i].type)
     {
     case '(':{
@@ -261,22 +245,6 @@ int find_main_operator(int p,int q){
     }
     default: break;
     }
-    */
-    if(tokens[i].type == '('){
-		int num=1;
-		while(num){
-		  if(tokens[++i].type == '(')
-			  num++;
-		  else if(tokens[i].type == ')')
-			  num--;
-		}
-		if(i > q) assert(0);
-	  }
-	  else if(judge_operator(i) <= rank){
-		  rank=judge_operator(i);
-		  op=i;
-	  }
-	  else continue;
 	}
 	return op;
 }
