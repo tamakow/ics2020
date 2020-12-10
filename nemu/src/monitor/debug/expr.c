@@ -265,9 +265,9 @@ uint32_t eval(int p,int q){
 		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
 	  int op = find_main_operator(p,q);//TODO to find the main
 		if(op==-1) assert(0);
-        if(tokens[op].type==TK_NEG) return 0-eval(op+1,q);
-	  	uint32_t val1 = eval(p , op - 1);
-	  	uint32_t val2 = eval(op + 1, q);
+    if(tokens[op].type==TK_NEG) return 0-eval(op+1,q);
+	  uint32_t val1 = eval(p , op - 1);
+	  uint32_t val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){
 		  	case '+': return val1+val2;
