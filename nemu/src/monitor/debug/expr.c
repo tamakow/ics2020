@@ -195,7 +195,7 @@ int judge_operator(int i){
 	else return -1;
 }
 
-int find_main_operator(int p,int q){
+uint16_t find_main_operator(uint32_t p,uint32_t q){
 	int op=p;
 	int rank=0;
 	int i;
@@ -259,7 +259,7 @@ uint32_t eval(int p,int q){
 	else{
 	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
-	  	int op = find_main_operator(p,q);//TODO to find the main
+	  	uint32_t op = find_main_operator(p,q);//TODO to find the main
 		//if(op==-1) assert(0);
         //if(tokens[op].type==TK_NEG) return 0-eval(op+1,q);
 	  	uint32_t val1 = eval(p , op - 1);
