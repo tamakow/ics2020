@@ -6,8 +6,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory/vaddr.h>
+#include <memory/paddr.h>
+
 void cpu_exec(uint64_t);
 int is_batch_mode();
+void QUIT_STATE();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -34,7 +37,8 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  return -1;
+	QUIT_STATE();
+	return -1;
 }
 
 static int cmd_help(char *args);
@@ -89,17 +93,19 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args){
   char *arg = strtok(NULL, " ");
-  int num = 0;
+  uint64_t num = 0;
 
   if(arg == NULL){
     cpu_exec(1);
 	return 0;
   }
-  sscanf(arg, "%d" , &num);
+  sscanf(arg, "%lu" , &num);
+  /*
   if(num < 0){
     printf("Please input a legal number\n");
     return 0;
   }
+  */
   cpu_exec(num);
   return 0;
 }
@@ -121,6 +127,7 @@ static int cmd_info(char *args){
 	else{
 		printf("Please input a legal instruction\n");
 	}
+
 	return 0;
 }
 
@@ -159,7 +166,7 @@ static int cmd_p(char *args){
 	uint32_t ans = expr(args, &success);
 	if(success == false){
 		printf("can not make_tokens successfully.\n");
-		return 0;
+		return 1;
 	}
 	else{
 		printf("%d\n",ans);

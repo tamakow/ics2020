@@ -18,7 +18,7 @@
 #define LOG_END   (1024 * 1024 * 50)
 
 CPU_state cpu = {};
-NEMUState nemu_state = { .state = NEMU_QUIT };
+NEMUState nemu_state = { .state = NEMU_STOP };
 static uint64_t g_nr_guest_instr = 0;
 static uint64_t g_timer = 0; // unit: ms
 const rtlreg_t rzero = 0;
@@ -74,6 +74,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
 
+
   uint64_t timer_start = get_time();
 
   for (; n > 0; n --) {
@@ -112,7 +113,7 @@ void cpu_exec(uint64_t n) {
   g_timer += timer_end - timer_start;
 
   switch (nemu_state.state) {
-    case NEMU_RUNNING: nemu_state.state = NEMU_QUIT; break;
+    case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 
     case NEMU_END: case NEMU_ABORT:
       Log("nemu: %s\33[0m at pc = " FMT_WORD "\n\n",
@@ -123,4 +124,8 @@ void cpu_exec(uint64_t n) {
     case NEMU_QUIT:
       monitor_statistic();
   }
+}
+
+void QUIT_STATE(){
+	nemu_state.state = NEMU_QUIT;
 }

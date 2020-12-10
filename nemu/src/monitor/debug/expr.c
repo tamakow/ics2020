@@ -75,7 +75,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-
+  bool flag = false;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -88,12 +88,14 @@ static bool make_token(char *e) {
 
         position += substr_len;
 
+        //if(i==0) break;
         /* TODO: Now a new token is recognized with rules[i]. Add codes
 	         * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        if(rules[i].token_type == TK_NOTYPE) break;
 
-        switch (rules[i].token_type) { 
+      switch (rules[i].token_type) { 
 			case TK_NOTYPE: break;
 			case TK_NEQ:{
 						tokens[nr_token].type = rules[i].token_type;
@@ -114,35 +116,39 @@ static bool make_token(char *e) {
 						break;
 					  }
 
-			case TK_NUM: case TK_HEX: case TK_REG:{
-						//memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
+			case TK_NUM:{
 						tokens[nr_token].type = rules[i].token_type;
-						strncpy(tokens[nr_token].str,substr_start,substr_len);
-						/*
-						int j;
-						for(j=0;j<substr_len;++j){
-							tokens[nr_token].str[j] = e[position-substr_len+j];
-						}
-						tokens[nr_token].str[j]='\0';
-						*/
+						if(substr_len<32)
+              strncpy(tokens[nr_token].str,substr_start,substr_len);
+            else assert(0);
+            if(flag){
+              tokens[nr_token].type = TK_NEG; 
+              flag=false;
+            }
+						nr_token++;
+						break;
+					  }
+       case TK_HEX: case TK_REG:{
+						tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;
 						break;
 					  }
 			case '-': {
-						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
-							tokens[nr_token].type = TK_NEG;
-							nr_token++;
+						if(nr_token==0 || (tokens[nr_token-1].type != TK_NEG && tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
+              flag = true;
+              //nr_token--;
 							break;
 						}
 			}
 			case '*': {
-						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
+						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != TK_NEG && tokens[nr_token-1].type != ')')){
 							tokens[nr_token].type = TK_POINT;
-							nr_token++;
+              nr_token++;
 							break;
 						}
 			}
-            default: {
+      default: {
 						tokens[nr_token].type = rules[i].token_type;
 						nr_token++;
 						break;
@@ -163,64 +169,82 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
-bool check_parentheses(int p,int q){
-	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
+
+bool inner_parentheses(int p,int q){
 	int num = 1; //record the number of unmatched left_parentheses
-	int i;
-	for(i = p + 1;i <= q;++ i){
-		if(tokens[i].type == '('){
+	while(p<=q && num){
+		if(tokens[p].type == '('){
 		  num++;
 		}
-		else if(tokens[i].type == ')'){
+		else if(tokens[p].type == ')'){
 		  num--;
-		  if(num == 0 && i != q) return false; 
 		}
-	}
-	if(num == 0) return true;
+    p++;
+  }
+	if(num == 1) return true;
 	return false;
 }
 
-int judge_operator(int i){
-	if(tokens[i].type == TK_AND)
-		return 1;
-	if(tokens[i].type == TK_EQ|| tokens[i].type == TK_NEQ)
-		return 2;
-	if(tokens[i].type == '+' || tokens[i].type == '-')
-		return 3;   
-	if(tokens[i].type == '*' || tokens[i].type == '/' )
-		return 4;
-
-	else return 0;
+bool check_parentheses(int p, int q){  
+  if(tokens[p].type == '(' && tokens[q].type == ')'){
+    return inner_parentheses(p + 1, q - 1);
+  }
+  return false;
 }
 
 int find_main_operator(int p,int q){
-	int op=p;
-	int rank=100;
+	int op=-1;
+	int rank=0;
 	int i;
 	for(i = p;i <= q;++i){
-	  if(tokens[i].type == '('){
-		int num=1;
-		i++;
-		while(num!=0){
-		  if(tokens[i].type == '(')
-			  num++;
-		  else if(tokens[i].type == ')')
-			  num--;
-		  i++;
-		}
-		i--;
-		if(i > q) assert(0);
-	  }
-	  else if(judge_operator(i) > 0 && judge_operator(i) <= rank){
-		  rank=judge_operator(i);
-		  op=i;
-	  }
-	  else continue;
+    switch (tokens[i].type)
+    {
+    case '(':{
+      int num=1;
+		  while(num){
+		    if(tokens[++i].type == '(')
+			    num++;
+		    else if(tokens[i].type == ')')
+			    num--;
+      }
+		  if(i > q) assert(0);
+      break;
+    }
+    case '+': case '-':{
+      if(op == -1 || rank <= 4){
+        rank = 4;
+        op = i;
+      }
+      break;
+    }
+    case '*': case '/':{
+      if(op == -1 || rank <= 2){
+        rank = 2;
+        op = i;
+      }
+      break;
+    }
+    case TK_EQ: case TK_NEQ:{
+      if(op == -1 || rank <= 8){
+        rank = 8;
+        op = i;
+      }
+      break;
+    }
+    case TK_AND:{
+      if(op == -1 || rank <= 16){
+        rank = 16;
+        op = i;
+      }
+      break;
+    }
+    default: break;
+    }
 	}
 	return op;
 }
 
-int eval(int p,int q){
+uint32_t eval(int p,int q){
 	if(p > q){
 		printf("%d %d\n",p,q);
 		assert(0);
@@ -232,6 +256,10 @@ int eval(int p,int q){
 	  			sscanf(tokens[p].str,"%d",&num);
 	  			return num;
 			}
+      case TK_NEG:{
+          sscanf(tokens[p].str,"%d",&num);
+	  			return 0-num;
+      }
 			case TK_HEX:{
 				num = strtol(tokens[p].str,NULL,16);
 				return num;
@@ -252,12 +280,12 @@ int eval(int p,int q){
 	  	return eval(p+1,q-1);
 	}
 	else{
-	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
-	  	int op = find_main_operator(p,q);//TODO to find the main
-        if(op==p&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-	  	int val1 = eval(p , op - 1);
-	  	int val2 = eval(op + 1, q);
+	  int op = find_main_operator(p,q);//TODO to find the main operator
+    if(op == -1) assert(0);
+    //if(op==-1&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
+	  uint32_t val1 = eval(p , op - 1);
+	  uint32_t val2 = eval(op + 1, q);
 
 	  	switch(tokens[op].type){
 		  	case '+': return val1+val2;
@@ -282,6 +310,9 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
  // printf("%d\n",nr_token);//delete after debuggging
-  *success = true;
-  return eval(0,nr_token-1);
+  *success = inner_parentheses(0,nr_token-1);
+  if(*success)
+    return eval(0,nr_token-1);
+  else
+    return 0;
 }
