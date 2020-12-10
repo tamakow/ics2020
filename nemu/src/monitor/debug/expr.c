@@ -165,17 +165,17 @@ static bool make_token(char *e) {
 // from here I will implement eval,check_parentheses and so on
 
 bool inner_parentheses(int p,int q){
-	int num = 0; //record the number of unmatched left_parentheses
-	int i;
-	for(i = p;i <= q;++ i){
-		if(tokens[i].type == '('){
+	int num = 1; //record the number of unmatched left_parentheses
+	while(p<=q && num){
+		if(tokens[p].type == '('){
 		  num++;
 		}
-		else if(tokens[i].type == ')'){
+		else if(tokens[p].type == ')'){
 		  num--;
 		}
-	}
-	if(num == 0) return true;
+    p++;
+  }
+	if(num == 1) return true;
 	return false;
 }
 
