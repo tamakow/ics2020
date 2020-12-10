@@ -214,12 +214,56 @@ int judge_operator(int i){
 
 int find_main_operator(int p,int q){
 	int op=-1;
-	int rank=100;
+	int rank=0;
 	int i;
 	for(i = p;i <= q;++i){
-	  if(tokens[i].type == '('){
+	  switch (tokens[i].type)
+    {
+    case '(':{
+      int num=1;
+		  while(num){
+		    if(tokens[++i].type == '(')
+			    num++;
+		    else if(tokens[i].type == ')')
+			    num--;
+      }
+		  if(i > q) assert(0);
+      break;
+    }
+    case '+': case '-':{
+      if(op == -1 || rank <= 4){
+        rank = 4;
+        op = i;
+      }
+      break;
+    }
+    case '*': case '/':{
+      if(op == -1 || rank <= 2){
+        rank = 2;
+        op = i;
+      }
+      break;
+    }
+    case TK_EQ: case TK_NEQ:{
+      if(op == -1 || rank <= 8){
+        rank = 8;
+        op = i;
+      }
+      break;
+    }
+    case TK_AND:{
+      if(op == -1 || rank <= 16){
+        rank = 16;
+        op = i;
+      }
+      break;
+    }
+    default: break;
+    }
+    /*
+    if(tokens[i].type == '('){
 		int num=1;
-		while(num!=0){
+		while(num){
 		  if(tokens[++i].type == '(')
 			  num++;
 		  else if(tokens[i].type == ')')
@@ -231,7 +275,7 @@ int find_main_operator(int p,int q){
 		  rank=judge_operator(i);
 		  op=i;
 	  }
-	  else continue;
+	  else continue;*/
 	}
 	return op;
 }
