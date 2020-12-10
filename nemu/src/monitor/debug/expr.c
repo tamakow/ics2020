@@ -164,6 +164,7 @@ static bool make_token(char *e) {
 
 // from here I will implement eval,check_parentheses and so on
 
+
 bool inner_parentheses(int p,int q){
 	int num = 1; //record the number of unmatched left_parentheses
 	while(p<=q && num){
@@ -186,6 +187,7 @@ bool check_parentheses(int p, int q){
   return false;
 }
 
+
 int judge_operator(int i){
 	if(tokens[i].type == TK_AND)
 		return 1;
@@ -198,6 +200,7 @@ int judge_operator(int i){
 	if(tokens[i].type == TK_NEG) return 6;
 	else return 1000;
 }
+
 
 int find_main_operator(int p,int q){
 	int op=-1;
