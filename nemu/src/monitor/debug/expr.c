@@ -93,35 +93,39 @@ static bool make_token(char *e) {
 	         * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
-        switch (rules[i].token_type) { 
+        tokens[nr_token].type = rules[i].token_type;
+        
+      switch (rules[i].token_type) { 
 			case TK_NOTYPE: break;
 			case TK_NEQ:{
-						tokens[nr_token].type = rules[i].token_type;
+						//tokens[nr_token].type = rules[i].token_type;
 						strcpy(tokens[nr_token].str,"!=");
-						nr_token++;
+						//nr_token++;
 						break;
 					  }
 			case TK_AND:{
-						tokens[nr_token].type = rules[i].token_type;
+						//tokens[nr_token].type = rules[i].token_type;
 						strcpy(tokens[nr_token].str,"&&");
-						nr_token++;
+						//nr_token++;
 						break;
 					  }
 			case TK_EQ: {
-						tokens[nr_token].type = rules[i].token_type;
+						//tokens[nr_token].type = rules[i].token_type;
 						strcpy(tokens[nr_token].str,"==");
-						nr_token++;
+						//nr_token++;
 						break;
 					  }
 
 			case TK_NUM: case TK_HEX: case TK_REG:{
 						//memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
-						tokens[nr_token].type = rules[i].token_type;
+						//tokens[nr_token].type = rules[i].token_type;
 						if(substr_len<32)
               strncpy(tokens[nr_token].str,substr_start,substr_len);
             else assert(0);
-            if(flag){tokens[nr_token].type = TK_NEG; flag=false;}
+            if(flag){
+              tokens[nr_token].type = TK_NEG; 
+              flag=false;
+            }
 						/*
 						int j;
 						for(j=0;j<substr_len;++j){
@@ -129,12 +133,13 @@ static bool make_token(char *e) {
 						}
 						tokens[nr_token].str[j]='\0';
 						*/
-						nr_token++;
+						//nr_token++;
 						break;
 					  }
 			case '-': {
 						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
               flag = true;
+              nr_token--;
 							break;
 						}
 			}
@@ -145,12 +150,15 @@ static bool make_token(char *e) {
 							break;
 						}
 			}
-            default: {
+      /*
+      default: {
 						tokens[nr_token].type = rules[i].token_type;
 						nr_token++;
 						break;
 				     }
+       */
         }
+        nr_token++;
         break;
 	  }      
     }
