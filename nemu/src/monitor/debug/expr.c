@@ -75,7 +75,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-
+  bool flag = false;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -118,7 +118,10 @@ static bool make_token(char *e) {
 			case TK_NUM: case TK_HEX: case TK_REG:{
 						//memset(tokens[nr_token].str,0,strlen(tokens[nr_token].str));
 						tokens[nr_token].type = rules[i].token_type;
-						strncpy(tokens[nr_token].str,substr_start,substr_len);
+						if(substr_len<32)
+              strncpy(tokens[nr_token].str,substr_start,substr_len);
+            else assert(0);
+            if(flag){tokens[nr_token].type = TK_NEG; flag=false;}
 						/*
 						int j;
 						for(j=0;j<substr_len;++j){
@@ -131,8 +134,7 @@ static bool make_token(char *e) {
 					  }
 			case '-': {
 						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
-							tokens[nr_token].type = TK_NEG;
-							nr_token++;
+              flag = true;
 							break;
 						}
 			}
@@ -241,6 +243,10 @@ uint32_t eval(int p,int q){
 	  			sscanf(tokens[p].str,"%d",&num);
 	  			return num;
 			}
+      case TK_NEG:{
+          sscanf(tokens[p].str,"%d",&num);
+	  			return 0-num;
+      }
 			case TK_HEX:{
 				num = strtol(tokens[p].str,NULL,16);
 				return num;
@@ -264,7 +270,7 @@ uint32_t eval(int p,int q){
 	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
 	  int op = find_main_operator(p,q);//TODO to find the main
-    if(op==-1&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
+    //if(op==-1&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 	  uint32_t val1 = eval(p , op - 1);
 	  uint32_t val2 = eval(op + 1, q);
 
