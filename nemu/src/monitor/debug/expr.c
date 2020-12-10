@@ -137,20 +137,19 @@ static bool make_token(char *e) {
 						break;
 					  }
 			case '-': {
-						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
+						if(nr_token==0 || (tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != ')')){
               flag = true;
               nr_token--;
 							break;
 						}
 			}
-      /*
 			case '*': {
 						if(nr_token==0 || ( tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type !=TK_NUM && tokens[nr_token-1].type != TK_NEG && tokens[nr_token-1].type != ')')){
 							tokens[nr_token].type = TK_POINT;
-							nr_token++;
 							break;
 						}
 			}
+      /*
       default: {
 						tokens[nr_token].type = rules[i].token_type;
 						nr_token++;
@@ -316,9 +315,8 @@ uint32_t eval(int p,int q){
 	  	return eval(p+1,q-1);
 	}
 	else{
-	  	//if(tokens[p].type==TK_NEG) return 0-eval(p+1,q);
-		//if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
-	  int op = find_main_operator(p,q);//TODO to find the main
+		if(tokens[p].type==TK_POINT)   return vaddr_read(eval(p+1,q),4); // this is not true if the following expression is not TK_NUM or '('+ expressoin+')'
+	  int op = find_main_operator(p,q);//TODO to find the main operator
     if(op == -1) assert(0);
     //if(op==-1&&tokens[p].type==TK_NEG) return 0-eval(p+1,q);
 	  uint32_t val1 = eval(p , op - 1);
