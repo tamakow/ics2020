@@ -217,7 +217,8 @@ int find_main_operator(int p,int q){
 	int rank=0;
 	int i;
 	for(i = p;i <= q;++i){
-	  switch (tokens[i].type)
+	  /*
+    switch (tokens[i].type)
     {
     case '(':{
       int num=1;
@@ -260,7 +261,7 @@ int find_main_operator(int p,int q){
     }
     default: break;
     }
-    /*
+    */
     if(tokens[i].type == '('){
 		int num=1;
 		while(num){
@@ -275,7 +276,7 @@ int find_main_operator(int p,int q){
 		  rank=judge_operator(i);
 		  op=i;
 	  }
-	  else continue;*/
+	  else continue;
 	}
 	return op;
 }
