@@ -218,7 +218,7 @@ int find_main_operator(int p,int q){
 		  i++;
 		}
 		i--;
-		if(i > q) printf("%d %d\n",i,q);assert(0);
+		if(i > q) assert(0);
 	  }
 	  else if(judge_operator(i) <= rank){
 		  rank=judge_operator(i);
