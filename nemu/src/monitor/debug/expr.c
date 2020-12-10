@@ -200,13 +200,13 @@ bool check_parentheses(int p, int q){
 
 int judge_operator(int i){
 	if(tokens[i].type == TK_AND)
-		return 1;
-	if(tokens[i].type == TK_EQ|| tokens[i].type == TK_NEQ)
 		return 2;
-	if(tokens[i].type == '+' || tokens[i].type == '-')
-		return 3;   
-	if(tokens[i].type == '*' || tokens[i].type == '/' )
+	if(tokens[i].type == TK_EQ|| tokens[i].type == TK_NEQ)
 		return 4;
+	if(tokens[i].type == '+' || tokens[i].type == '-')
+		return 8;   
+	if(tokens[i].type == '*' || tokens[i].type == '/' )
+		return 16;
 	//if(tokens[i].type == TK_NEG) return 6;
 	else return 1000;
 }
@@ -219,15 +219,12 @@ int find_main_operator(int p,int q){
 	for(i = p;i <= q;++i){
 	  if(tokens[i].type == '('){
 		int num=1;
-		i++;
 		while(num!=0){
-		  if(tokens[i].type == '(')
+		  if(tokens[++i].type == '(')
 			  num++;
 		  else if(tokens[i].type == ')')
 			  num--;
-		  i++;
 		}
-		i--;
 		if(i > q) assert(0);
 	  }
 	  else if(judge_operator(i) <= rank){
