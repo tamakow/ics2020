@@ -82,13 +82,14 @@ again:
     IDEX (0x2b, E2G, sub)
     IDEXW (0x2c, I2a, sub, 1)
     IDEX (0x2d, I2a, sub)
-    //xor
+    /*//xor
     IDEXW (0x30, G2E, xor, 1)
     IDEX (0x31, G2E, xor)
     IDEXW (0x32, E2G, xor, 1)
     IDEX (0x33, E2G, xor)
     IDEXW (0x34, I2a, xor, 1)
     IDEX (0x35, I2a, xor)
+    */
     //push r32 0x50~0x58
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
@@ -129,11 +130,11 @@ again:
     IDEX (0xbf, mov_I2r, mov)
     IDEXW(0xc0, gp2_Ib2E, gp2, 1)
     IDEX (0xc1, gp2_Ib2E, gp2)
-    //EX (0xc3, ret) //ret
+    EX (0xc3, ret) //ret
     IDEXW(0xc6, mov_I2E, mov, 1)
     IDEX (0xc7, mov_I2E, mov)
-    //IDEXW (0xca, I, ret, 2)
-    //EX (0xcb, ret)
+    IDEXW (0xca, I, ret, 2)
+    EX (0xcb, ret)
     IDEXW(0xd0, gp2_1_E, gp2, 1)
     IDEX (0xd1, gp2_1_E, gp2)
     IDEXW(0xd2, gp2_cl2E, gp2, 1)
