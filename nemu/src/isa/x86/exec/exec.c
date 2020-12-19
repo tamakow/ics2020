@@ -89,7 +89,6 @@ again:
     IDEX (0x33, E2G, xor)
     IDEXW (0x34, I2a, xor, 1)
     IDEX (0x35, I2a, xor)
-    /*
     //push r32 0x50~0x58
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
@@ -100,7 +99,6 @@ again:
     IDEX (0x56, r, push)
     IDEX (0x57, r, push)
     IDEX (0x58, r, push)
-    */
     IDEX (0x68, push_SI, push)
     IDEXW(0x80, I2E, gp1, 1)
     IDEX (0x81, I2E, gp1)
