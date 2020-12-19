@@ -35,6 +35,12 @@ typedef struct {
 	};
 	};
 	vaddr_t pc;
+	
+	//eflags
+	struct{
+		uint32_t CF, ZF, SF, IF, OF;
+	}eflags;
+	
 } x86_CPU_state;
 
 // decode
