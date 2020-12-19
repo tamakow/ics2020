@@ -28,8 +28,8 @@ static inline def_rtl(push, const rtlreg_t* src1) {
   // esp <- esp - 4
   // M[esp] <- src1
   //TODO();
-  //rtl_subi(s,&cpu.esp,&cpu.esp,4);
-   cpu.esp-=4; 
+  rtl_subi(s,&cpu.esp,&cpu.esp,4);
+  //cpu.esp-=4; 
   rtl_sm(s,&cpu.esp,0,src1,4);
 }
 
