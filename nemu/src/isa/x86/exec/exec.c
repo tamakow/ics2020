@@ -129,8 +129,11 @@ again:
     IDEX (0xbf, mov_I2r, mov)
     IDEXW(0xc0, gp2_Ib2E, gp2, 1)
     IDEX (0xc1, gp2_Ib2E, gp2)
+    EX (0xc3, ret) //ret
     IDEXW(0xc6, mov_I2E, mov, 1)
     IDEX (0xc7, mov_I2E, mov)
+    IDEXW (0xca, I, ret, 2)
+    EX (0xcb, ret)
     IDEXW(0xd0, gp2_1_E, gp2, 1)
     IDEX (0xd1, gp2_1_E, gp2)
     IDEXW(0xd2, gp2_cl2E, gp2, 1)
