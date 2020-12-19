@@ -75,21 +75,21 @@ again:
   s->opcode = opcode;
   switch (opcode) {
     EX   (0x0f, 2byte_esc)
-    //sub 
+    /*//sub 
     IDEXW (0x28, G2E, sub, 1)
     IDEX (0x29, G2E, sub)
     IDEXW (0x2a, E2G, sub, 1)
     IDEX (0x2b, E2G, sub)
     IDEXW (0x2c, I2a, sub, 1)
     IDEX (0x2d, I2a, sub)
-    /*//xor
+    */
+    //xor
     IDEXW (0x30, G2E, xor, 1)
     IDEX (0x31, G2E, xor)
     IDEXW (0x32, E2G, xor, 1)
     IDEX (0x33, E2G, xor)
     IDEXW (0x34, I2a, xor, 1)
     IDEX (0x35, I2a, xor)
-    */
     //push r32 0x50~0x58
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
