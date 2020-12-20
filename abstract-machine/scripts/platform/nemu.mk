@@ -14,7 +14,7 @@ LDFLAGS   += -L $(AM_HOME)/am/src/nemu/scripts
 LDFLAGS   += -T $(AM_HOME)/am/src/nemu/isa/$(ISA)/boot/loader.ld
 LDFLAGS   += --gc-sections -e _start
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt $(IMAGE).bin
-
+#NEMUFLAGS += -b -l
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 CFLAGS += -I$(AM_HOME)/am/src/nemu/include
 .PHONY: $(AM_HOME)/am/src/nemu/trm.c
