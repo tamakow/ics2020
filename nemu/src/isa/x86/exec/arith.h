@@ -21,9 +21,7 @@ static inline def_EHelper(sub) {
   rtl_update_ZFSF(s, s1, id_dest->width);
   rtl_is_sub_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s2);
-  // rtl_is_add_carry(s, s2, s0, dsrc1);
   rtl_is_sub_carry(s, s0, ddest, dsrc1);
-  // rtl_or(s, s0, s0, s2);
   rtl_set_CF(s, s0);
   operand_write(s, id_dest, s1);
   print_asm_template2(sub);
