@@ -30,10 +30,14 @@ static inline def_rtl(neg, rtlreg_t *dest, const rtlreg_t* src1) {
 static inline def_rtl(sext, rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
   //TODO();
+  /*
   sword_t s_src1 = (sword_t) *src1;
   s_src1 <<= 32-8*width;
   s_src1 >>= 32-8*width;
   *dest = s_src1;
+  */
+ rtl_shli(s,dest,src1,32-width*8);
+ rtl_sari(s,dest,src1,32-width*8);
 }
 
 static inline def_rtl(zext, rtlreg_t* dest, const rtlreg_t* src1, int width) {
