@@ -46,8 +46,18 @@ static inline def_EHelper(cmp) {
   print_asm_template2(cmp);
 }
 
-static inline def_EHelper(inc) {
-  TODO();
+static inline def_EHelper(inc) { //可能标志位有问题，注意一下
+  //TODO();
+  rtl_addi(s,s0,ddest,1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
+  //OF =1 只在符号位相同的两数相加得到了符号位不同的
+  rtl_xori(s,s1,ddest,1);
+  rtl_not(s,s1,s1);
+  rtl_xor(s,s2,ddest,s0);
+  rtl_and(s,s1,s1,s2);
+  rtl_msb(s,s1,s1,id_dest->width);
+  rtl_set_OF(s,s1);
+  operand_write(s,id_dest,s0);
   print_asm_template1(inc);
 }
 
