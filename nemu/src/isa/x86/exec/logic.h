@@ -53,7 +53,7 @@ static inline def_EHelper(sar) {
 }
 
 static inline def_EHelper(shl) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
   rtl_shl(s,s0,ddest,dsrc1);
   operand_write(s,id_dest,s0);
@@ -62,7 +62,7 @@ static inline def_EHelper(shl) {
 }
 
 static inline def_EHelper(shr) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
   rtl_shr(s,s0,ddest,dsrc1);
   operand_write(s,id_dest,s0);
