@@ -30,7 +30,7 @@ static inline def_EHelper(gp2) {
 static inline def_EHelper(gp3) {
   switch (s->isa.ext_opcode) {
     IDEX(0,test_I,test) EMPTY(1) EX(2,not) EMPTY(3)
-    EMPTY(4) EMPTY(5) EMPTY(6) EMPTY(7)
+    EMPTY(4) EX(5,imul1) EMPTY(6) EMPTY(7)
   }
 }
 
@@ -84,6 +84,8 @@ static inline def_EHelper(2byte_esc) {
     //movzx
     IDEXW (0Xb6, mov_E2G, movzx, 1)
     IDEXW (0xb7, mov_E2G, movzx, 2)
+    //imul2
+    IDEX (0xaf, E2G, imul2)
     default: exec_inv(s);
   }
 }
@@ -181,24 +183,26 @@ again:
     IDEX (0x5e, r, pop)
     IDEX (0x5f, r, pop)
     IDEX (0x68, push_SI, push)
-    IDEXW (0x6a, push_SI, push, 1)
+    IDEX (0x69, I_E2G, imul3)
+    IDEXW(0x6a, push_SI, push, 1)
+    IDEXW(0x6b, I_E2G, imul3, 1)
     //jcc (jmp if condition is met)
-    IDEXW (0x70, J, jcc, 1)
-    IDEXW (0x71, J, jcc, 1)
-    IDEXW (0x72, J, jcc, 1)
-    IDEXW (0x73, J, jcc, 1)
-    IDEXW (0x74, J, jcc, 1)
-    IDEXW (0x75, J, jcc, 1)
-    IDEXW (0x76, J, jcc, 1)
-    IDEXW (0x77, J, jcc, 1)
-    IDEXW (0x78, J, jcc, 1)
-    IDEXW (0x79, J, jcc, 1)
-    IDEXW (0x7a, J, jcc, 1)
-    IDEXW (0x7b, J, jcc, 1)
-    IDEXW (0x7c, J, jcc, 1)
-    IDEXW (0x7d, J, jcc, 1)
-    IDEXW (0x7e, J, jcc, 1)
-    IDEXW (0x7f, J, jcc, 1)
+    IDEXW(0x70, J, jcc, 1)
+    IDEXW(0x71, J, jcc, 1)
+    IDEXW(0x72, J, jcc, 1)
+    IDEXW(0x73, J, jcc, 1)
+    IDEXW(0x74, J, jcc, 1)
+    IDEXW(0x75, J, jcc, 1)
+    IDEXW(0x76, J, jcc, 1)
+    IDEXW(0x77, J, jcc, 1)
+    IDEXW(0x78, J, jcc, 1)
+    IDEXW(0x79, J, jcc, 1)
+    IDEXW(0x7a, J, jcc, 1)
+    IDEXW(0x7b, J, jcc, 1)
+    IDEXW(0x7c, J, jcc, 1)
+    IDEXW(0x7d, J, jcc, 1)
+    IDEXW(0x7e, J, jcc, 1)
+    IDEXW(0x7f, J, jcc, 1)
 
     IDEXW(0x80, I2E, gp1, 1)
     IDEX (0x81, I2E, gp1)
