@@ -26,7 +26,7 @@ typedef struct {
   vaddr_t jmp_pc;
   Operand src1, dest, src2;
   int width;
-  rtlreg_t tmp_reg[4]; //本应该是5
+  rtlreg_t tmp_reg[5]; //为了加一个t1
   ISADecodeInfo isa;
 } DecodeExecState;
 

@@ -48,17 +48,17 @@ static inline def_rtl(is_sub_overflow, rtlreg_t* dest,
   // dest <- is_overflow(src1 - src2)
   //TODO();
   //两个数异号而结果与被减数符号相反则OF为1
-  //rtl_msb(s,t0,src1,width); 1
-  //rtl_msb(s,t1,src2,width); 1
+  rtl_msb(s,t0,src1,width); 
+  rtl_msb(s,t1,src2,width); 
 
   //rtl_setrelop(s,RELOP_NE,dest,t0,t1);
-  //*dest = ((*t0&0x1) != (*t1&0x1)); 1
+  *dest = ((*t0&0x1) != (*t1&0x1)); 
   
-  //rtl_msb(s,t0,res,width); 1
+  rtl_msb(s,t0,res,width); 
 
   //rtl_setrelop(s,RELOP_EQ,t1,t0,t1);
-  //*t1 = ((*t0&0x1) == (*t1&0x1)); 1
-  //rtl_and(s,dest,dest,t1); 1
+  *t1 = ((*t0&0x1) == (*t1&0x1)); 
+  rtl_and(s,dest,dest,t1); 
 }
 
 static inline def_rtl(is_sub_carry, rtlreg_t* dest,
@@ -74,14 +74,14 @@ static inline def_rtl(is_add_overflow, rtlreg_t* dest,
   // dest <- is_overflow(src1 + src2)
   //TODO();
   //两个数同号而结果与之相反则OF为1
-  // rtl_msb(s,t0,src1,width); 1
-  // rtl_msb(s,t1,src2,width); 1
+  rtl_msb(s,t0,src1,width); 
+  rtl_msb(s,t1,src2,width); 
   //rtl_setrelop(s,RELOP_EQ,dest,t0,t1);
-  // *dest = ((*t0&0x1) == (*t1&0x1)); 1
-  // rtl_msb(s,t0,res,width); 1
+  *dest = ((*t0&0x1) == (*t1&0x1)); 
+  rtl_msb(s,t0,res,width); 
   //rtl_setrelop(s,RELOP_NE,t1,t0,t1);
-  // *t1 = ((*t0&0x1) != (*t1&0x1)); 1
-  // rtl_and(s,dest,dest,t1); 1
+  *t1 = ((*t0&0x1) != (*t1&0x1)); 
+  rtl_and(s,dest,dest,t1); 
 }
 
 static inline def_rtl(is_add_carry, rtlreg_t* dest,
