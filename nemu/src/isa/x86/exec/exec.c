@@ -64,6 +64,23 @@ static inline def_EHelper(2byte_esc) {
   switch (opcode) {
   /* TODO: Add more instructions!!! */
     IDEX (0x01, gp7_E, gp7)
+    //setcc (byte set on condition)
+    IDEXW (0x90, setcc_E, setcc, 1)
+    IDEXW (0x91, setcc_E, setcc, 1)
+    IDEXW (0x92, setcc_E, setcc, 1)
+    IDEXW (0x93, setcc_E, setcc, 1)
+    IDEXW (0x94, setcc_E, setcc, 1)
+    IDEXW (0x95, setcc_E, setcc, 1)
+    IDEXW (0x96, setcc_E, setcc, 1)
+    IDEXW (0x97, setcc_E, setcc, 1)
+    IDEXW (0x98, setcc_E, setcc, 1)
+    IDEXW (0x99, setcc_E, setcc, 1)
+    IDEXW (0x9a, setcc_E, setcc, 1)
+    IDEXW (0x9b, setcc_E, setcc, 1)
+    IDEXW (0x9c, setcc_E, setcc, 1)
+    IDEXW (0x9d, setcc_E, setcc, 1)
+    IDEXW (0x9e, setcc_E, setcc, 1)
+    IDEXW (0x9f, setcc_E, setcc, 1)
     default: exec_inv(s);
   }
 }
