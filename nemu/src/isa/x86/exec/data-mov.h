@@ -36,14 +36,17 @@ static inline def_EHelper(leave) {
   print_asm("leave");
 }
 
-static inline def_EHelper(cltd) {
+static inline def_EHelper(cltd) { //实现的很蛇皮，以后看能不能用trl优化
   if (s->isa.is_operand_size_16) {
-    TODO();
+    //符号扩展
+    if(0x1&(cpu.eax>>15)) cpu.edx |= 0x0000ffff;
+    else cpu.edx &= 0xffff0000;
   }
   else {
-  TODO();
+  //TODO();
+  if(0x1&(cpu.eax>>31)) cpu.edx |= 0xffffffff;
+    else cpu.edx &= 0x0;
   }
-
   print_asm(s->isa.is_operand_size_16 ? "cwtl" : "cltd");
 }
 
