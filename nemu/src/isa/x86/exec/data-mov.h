@@ -28,9 +28,11 @@ static inline def_EHelper(popa) {
   print_asm("popa");
 }
 
+// High Level Procedure Exit
 static inline def_EHelper(leave) {
-  TODO();
-
+  //TODO();
+  rtl_mv(s,&cpu.esp,&cpu.ebp);
+  rtl_pop(s,&cpu.ebp);
   print_asm("leave");
 }
 
