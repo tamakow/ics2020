@@ -37,7 +37,7 @@ static inline def_rtl(sext, rtlreg_t* dest, const rtlreg_t* src1, int width) {
   *dest = s_src1;
   */
  rtl_shli(s,dest,src1,32-width*8);
- rtl_sari(s,dest,src1,32-width*8);
+ rtl_sari(s,dest,dest,32-width*8);
 }
 
 static inline def_rtl(zext, rtlreg_t* dest, const rtlreg_t* src1, int width) {
