@@ -32,8 +32,13 @@ static inline def_EHelper(xor) {
 }
 
 static inline def_EHelper(or) {
-  TODO();
-
+  //TODO();
+  rtl_or(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_li(s,s1,0);
+  rtl_set_OF(s,s1);
+  rtl_set_CF(s,s1);
+  rtl_update_ZFSF(s,ddest,id_dest->width);
   print_asm_template2(or);
 }
 
