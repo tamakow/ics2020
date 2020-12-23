@@ -108,7 +108,7 @@ def_rtl_setget_eflags(SF)
 static inline def_rtl(update_ZF, const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   //TODO();
-  rtl_shri(s,t0,result,32-8*width);
+  rtl_shli(s,t0,result,32-8*width);
   if(*t0 == 0) cpu.eflags.ZF = 1;
   else  cpu.eflags.ZF = 0;
 }
