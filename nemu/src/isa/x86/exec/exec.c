@@ -159,7 +159,7 @@ again:
     IDEXW (0x7d, J, jcc, 1)
     IDEXW (0x7e, J, jcc, 1)
     IDEXW (0x7f, J, jcc, 1)
-    
+
     IDEXW(0x80, I2E, gp1, 1)
     IDEX (0x81, I2E, gp1)
     IDEX (0x83, SI2E, gp1)
@@ -194,6 +194,7 @@ again:
     EX (0xc3, ret) //ret
     IDEXW(0xc6, mov_I2E, mov, 1)
     IDEX (0xc7, mov_I2E, mov)
+    EX (0xc9, leave);
     //IDEXW (0xca, I, ret, 2)
     //EX (0xcb, ret)
     IDEXW(0xd0, gp2_1_E, gp2, 1)
