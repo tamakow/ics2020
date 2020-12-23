@@ -35,10 +35,25 @@ typedef struct {
 	};
 	};
 	vaddr_t pc;
-	
+	/*
 	//eflags
 	struct{
 		uint32_t CF, ZF, SF, IF, OF;
+	}eflags;
+	*/
+	union{
+		struct{
+			uint32_t CF:1;
+			unsigned :5;
+			uint32_t ZF:1;
+			uint32_t SF:1;
+			unsigned :1;
+			uint32_t IF:1;
+			unsigned :1;
+			uint32_t OF:1;
+			signed :20;
+		};
+		uint32_t val;
 	}eflags;
 	
 } x86_CPU_state;
