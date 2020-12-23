@@ -46,7 +46,7 @@ static inline def_EHelper(gp4) {
 static inline def_EHelper(gp5) {
   switch (s->isa.ext_opcode) {
     EX(0, inc) EX(1, dec) EMPTY(2) EMPTY(3)
-    EMPTY(4) EMPTY(5) EX(6, push) EMPTY(7)
+    EX(4,jmp_rm) EX(5,jmp_rm) EX(6, push) EMPTY(7)
   }
 }
 
@@ -254,7 +254,7 @@ again:
     EX   (0xd6, nemu_trap)
     IDEX (0xe8 , J, call) // call rel32
     IDEX (0xe9, J, jmp)
-    //IDEX (0xea, ) //TODO!!!!
+    IDEX (0xea, I, jmp_rm) //!!!!
     IDEXW(0xeb, J, jmp, 1)
     IDEXW(0xf6, E, gp3, 1)
     IDEX (0xf7, E, gp3)
