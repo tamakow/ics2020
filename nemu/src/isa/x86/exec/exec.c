@@ -210,7 +210,6 @@ again:
     //test
     IDEXW (0x84, G2E, test, 1);
     IDEX (0X85, G2E, test);
-    //EX   (0x85, test)       //jkjkjk
     IDEXW(0x88, mov_G2E, mov, 1)
     IDEX (0x89, mov_G2E, mov)
     IDEXW(0x8a, mov_E2G, mov, 1)
@@ -254,6 +253,9 @@ again:
     IDEX (0xd3, gp2_cl2E, gp2)
     EX   (0xd6, nemu_trap)
     IDEX (0xe8 , J, call) // call rel32
+    IDEX (0xe9, J, jmp)
+    //IDEX (0xea, ) //TODO!!!!
+    IDEXW(0xeb, J, jmp, 1)
     IDEXW(0xf6, E, gp3, 1)
     IDEX (0xf7, E, gp3)
     IDEXW(0xfe, E, gp4, 1)
