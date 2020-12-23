@@ -37,7 +37,7 @@ static inline def_EHelper(gp3) {
 /* 0xfe */
 static inline def_EHelper(gp4) {
   switch (s->isa.ext_opcode) {
-    EMPTY(0) EMPTY(1) EMPTY(2) EMPTY(3)
+    EMPTY(0) EX(1, dec) EMPTY(2) EMPTY(3)
     EMPTY(4) EMPTY(5) EMPTY(6) EMPTY(7)
   }
 }
@@ -45,7 +45,7 @@ static inline def_EHelper(gp4) {
 /* 0xff */
 static inline def_EHelper(gp5) {
   switch (s->isa.ext_opcode) {
-    EX(0, inc) EMPTY(1) EMPTY(2) EMPTY(3)
+    EX(0, inc) EX(1, dec) EMPTY(2) EMPTY(3)
     EMPTY(4) EMPTY(5) EX(6, push) EMPTY(7)
   }
 }
@@ -153,6 +153,15 @@ again:
     IDEX (0x45, r, inc)
     IDEX (0x46, r, inc)
     IDEX (0x47, r, inc)
+    //dec
+    IDEX (0x48, r, dec)
+    IDEX (0x49, r, dec)
+    IDEX (0x4a, r, dec)
+    IDEX (0x4b, r, dec)
+    IDEX (0x4c, r, dec)
+    IDEX (0x4d, r, dec)
+    IDEX (0x4e, r, dec)
+    IDEX (0x4f, r, dec)
     //push r32 0x50~0x58
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
