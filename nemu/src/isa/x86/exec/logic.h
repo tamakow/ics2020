@@ -85,8 +85,9 @@ static inline def_EHelper(setcc) {
 }
 
 static inline def_EHelper(not) {
-  TODO();
-
+  //TODO();
+  rtl_not(s,s0,ddest);
+  operand_write(s,id_dest,s0);
   print_asm_template1(not);
 }
 
