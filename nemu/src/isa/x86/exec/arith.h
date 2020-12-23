@@ -1,7 +1,14 @@
 #include "cc.h"
 
 static inline def_EHelper(add) {
-  TODO();
+  //TODO();
+  rtl_add(s,s1,ddest,dsrc1);
+  rtl_update_ZFSF(s, s1, id_dest->width);
+  rtl_is_add_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
+  rtl_set_OF(s, s2);
+  rtl_is_add_carry(s, s0, s1, ddest);
+  rtl_set_CF(s, s0);
+  operand_write(s, id_dest, s1);
   print_asm_template2(add);
 }
 
