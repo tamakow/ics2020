@@ -36,7 +36,7 @@ static inline def_EHelper(leave) {
   print_asm("leave");
 }
 
-static inline def_EHelper(cltd) { //实现的很蛇皮，以后看能不能用trl优化
+static inline def_EHelper(cltd) { //实现的很蛇皮，以后看能不能用rtl优化
   if (s->isa.is_operand_size_16) {
     //符号扩展
     if(0x1&(cpu.eax>>15)) cpu.edx |= 0x0000ffff;
