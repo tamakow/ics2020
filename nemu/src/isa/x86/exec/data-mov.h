@@ -68,6 +68,14 @@ static inline def_EHelper(movsx) {
   print_asm_template2(movsx);
 }
 
+static inline def_EHelper(movsb) {
+  rtl_lm(s,s0,&cpu.esi,0,1);
+  rtl_sm(s,&cpu.edi,0,s0,1);
+  cpu.esi++;
+  cpu.edi++;
+  print_asm("movsb");
+}
+
 static inline def_EHelper(movzx) {
   id_dest->width = s->isa.is_operand_size_16 ? 2 : 4;
   operand_write(s, id_dest, dsrc1);
