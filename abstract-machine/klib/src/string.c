@@ -71,7 +71,21 @@ void* memset(void* v,int c,size_t n) {
 
 void* memmove(void* dst,const void* src,size_t n) {
   //TODO();
-  return NULL;
+  char* d = (char*) dst;
+  const char* s = (const char*) src;
+  if(s>d){
+    while(n--){
+      *d++ =*s++;
+    }
+  }
+  else if(s<d){
+    d = d+n-1;
+    s = s+n-1;
+    while(n--){
+      *d-- = *s--;
+    }
+  }
+  return dst;
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
