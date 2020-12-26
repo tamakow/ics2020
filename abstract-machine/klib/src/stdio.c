@@ -74,7 +74,7 @@ int sprintf(char *out, const char *fmt, ...) {
       }
       else if(fmt[pre] == 'd'){
         int tmp_num = va_arg(Args,int);
-        char tmp[50]="";
+        char tmp[128]="";
         zx_itoa(tmp_num,tmp,10);
         strcat(out,tmp);
         return_val += strlen(tmp);
