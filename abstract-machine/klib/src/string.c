@@ -42,7 +42,6 @@ char* strcat(char* dst, const char* src) {
 }
 
 int strcmp(const char* s1, const char* s2) {
-  return 0;
   while(*s1!='\0'&&*s2!='\0'&&*s1==*s2){
     s1++;
     s2++;
@@ -53,22 +52,44 @@ int strcmp(const char* s1, const char* s2) {
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
+  // if strlen(s1) < n && strlen(s2) < n 可能会比较尴尬，只要保证输入合法
+  for(size_t i = 0; i < n; ++ i){
+    if(*(s1+i) > *(s2+i)) return 1;
+    else if(*(s1+i) < *(s2+i)) return -1;
+  }
   return 0;
 }
 
-void* memset(void* v,int c,size_t n) { //TODO
-  return NULL;
+void* memset(void* v,int c,size_t n) { 
+  void* tmp = v;
+  while(n--){
+    *(char*)v = (char)c;
+    v = (char*)v + 1;
+  }
+  return tmp;
 }
 
 void* memmove(void* dst,const void* src,size_t n) {
+  //TODO();
   return NULL;
 }
 
-void* memcpy(void* out, const void* in, size_t n) { //TODO
-  return NULL;
+void* memcpy(void* out, const void* in, size_t n) {
+  char *charout = (char *)out;
+  char *charin = (char *)in;
+  while(n--){
+    *charout++ = *charin++;
+  }
+  return out;
 }
 
-int memcmp(const void* s1, const void* s2, size_t n) { //TODO
+int memcmp(const void* s1, const void* s2, size_t n) { 
+  char* chars1 = (char*)s1;
+  char* chars2 = (char*)s2;
+  for(size_t i = 0; i < n; ++i){
+    if(*(chars1+i) > *(chars2+i)) return 1;
+    else if(*(chars1+i) < *(chars2+i)) return -1;
+  }
   return 0;
 }
 
