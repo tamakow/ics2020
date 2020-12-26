@@ -66,9 +66,9 @@ static inline def_EHelper(in) {
 static inline def_EHelper(out) {
   //TODO();
   switch(id_dest->width){
-    case 4: pio_write_l(*ddest,*dsrc1); break;
-    case 2: pio_write_w(*ddest,*dsrc1); break;
-    case 1: pio_write_b(*ddest,*dsrc1); break;
+    case 4: pio_write_l(id_dest->val,id_src1->val); break;
+    case 2: pio_write_w(id_dest->val,id_src1->val); break;
+    case 1: pio_write_b(id_dest->val,id_src1->val); break;
     default: assert(0);
   }
   print_asm_template2(out);
