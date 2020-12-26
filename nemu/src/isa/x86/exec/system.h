@@ -52,7 +52,7 @@ static inline def_EHelper(iret) {
 //IN OUT 都有问题
 
 static inline def_EHelper(in) {
-  TODO();
+  //TODO();
   switch(id_dest->width){
     case 4: rtl_li(s,s0,pio_read_l(*dsrc1)); break;
     case 2: rtl_li(s,s0,pio_read_w(*dsrc1)); break;
@@ -64,7 +64,7 @@ static inline def_EHelper(in) {
 }
 
 static inline def_EHelper(out) {
-  TODO();
+  //TODO();
   switch(id_dest->width){
     case 4: pio_write_l(*ddest,*dsrc1); break;
     case 2: pio_write_w(*ddest,*dsrc1); break;
