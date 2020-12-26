@@ -49,13 +49,14 @@ static inline def_EHelper(iret) {
 #endif
 }
 
-
+//IN OUT 都有问题
 
 static inline def_EHelper(in) {
+  TODO();
   switch(id_dest->width){
-    case 4: rtl_li(s,s0,pio_read_l(id_src1->val)); break;
-    case 2: rtl_li(s,s0,pio_read_w(id_src1->val)); break;
-    case 1: rtl_li(s,s0,pio_read_b(id_src1->val)); break;
+    case 4: rtl_li(s,s0,pio_read_l(*dsrc1)); break;
+    case 2: rtl_li(s,s0,pio_read_w(*dsrc1)); break;
+    case 1: rtl_li(s,s0,pio_read_b(*dsrc1)); break;
     default: assert(0);
   }
   operand_write(s,id_dest,s0);
@@ -63,11 +64,11 @@ static inline def_EHelper(in) {
 }
 
 static inline def_EHelper(out) {
-  //TODO();
+  TODO();
   switch(id_dest->width){
-    case 4: pio_write_l(id_dest->val,id_src1->val); break;
-    case 2: pio_write_w(id_dest->val,id_src1->val); break;
-    case 1: pio_write_b(id_dest->val,id_src1->val); break;
+    case 4: pio_write_l(*ddest,*dsrc1); break;
+    case 2: pio_write_w(*ddest,*dsrc1); break;
+    case 1: pio_write_b(*ddest,*dsrc1); break;
     default: assert(0);
   }
   print_asm_template2(out);
