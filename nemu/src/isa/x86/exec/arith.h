@@ -76,7 +76,14 @@ static inline def_EHelper(dec) {
 }
 
 static inline def_EHelper(neg) {
-  TODO();
+  rtl_setrelopi(s,RELOP_EQ,s0,ddest,0);
+  rtl_set_CF(s,s0);
+  rtl_li(s,s0,0);
+  rtl_sub(s,s1,s0,ddest);
+  operand_write(s,id_dest,s1);
+  rtl_update_ZFSF(s,s1,id_dest->width);
+  rtl_is_sub_overflow(s,s0,s1,s0,ddest,id_dest->width);
+  rtl_set_OF(s,s0);
   print_asm_template1(neg);
 }
 
