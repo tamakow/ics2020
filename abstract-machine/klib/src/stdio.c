@@ -23,7 +23,7 @@ char* zx_itoa(int num,char* str,int radix){
       *p = num%radix + '0';
     }
     else{
-      *p = num%radix + 'a';
+      *p = num%radix - 10 + 'a';
     }
     num = num/radix;
     p++;
@@ -69,8 +69,14 @@ int printf(const char *fmt, ...) {
       else if(fmt[pre] == 'u'){
         unsigned tmp_num = va_arg(Args,unsigned);
         char tmp[128]="";
-        zx_itoa(tmp_num,tmp,10);
-        for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
+        int j=0;
+        // zx_itoa(tmp_num,tmp,10);
+        do{
+          int tmp_1 = tmp_num % 10;
+          tmp[j++] = tmp_1 + '0';
+          tmp_num/=10;
+        }while(tmp_num);
+        for(int i= j-1;i>=0;--i) putch(tmp[i]);
         return_val += strlen(tmp);
       }
       else if(fmt[pre] == 'x'){
