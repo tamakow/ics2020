@@ -4,11 +4,11 @@
 static uint32_t start_time;
 
 void __am_timer_init() {
-  start_time=inl(RTC_ADDR)/100;
+  start_time=inl(RTC_ADDR);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = inl(RTC_ADDR)/100-start_time;
+  uptime->us = (inl(RTC_ADDR)-start_time)/100;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
