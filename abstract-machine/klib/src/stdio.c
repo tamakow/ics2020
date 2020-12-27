@@ -66,6 +66,20 @@ int printf(const char *fmt, ...) {
         for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
         return_val += strlen(tmp);
       }
+      else if(fmt[pre] == 'u'){
+        unsigned tmp_num = va_arg(Args,unsigned);
+        char tmp[128]="";
+        zx_itoa(tmp_num,tmp,10);
+        for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
+        return_val += strlen(tmp);
+      }
+      else if(fmt[pre] == 'x'){
+        unsigned tmp_num = va_arg(Args,unsigned);
+        char tmp[128]="";
+        zx_itoa(tmp_num,tmp,16);
+        for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
+        return_val += strlen(tmp);
+      }
       else {
         printf("to be continue\n");
         assert(0);
