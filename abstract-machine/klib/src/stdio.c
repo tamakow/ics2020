@@ -86,6 +86,10 @@ int printf(const char *fmt, ...) {
         for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
         return_val += strlen(tmp);
       }
+      else if(fmt[pre] == '%'){
+        putch(fmt[pre++]);
+        return_val++;
+      }
       else {
         printf("to be continue\n");
         assert(0);
