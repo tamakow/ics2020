@@ -76,7 +76,13 @@ static inline def_EHelper(shr) {
 }
 
 static inline def_EHelper(rol) {
-  TODO();
+  for(int i=0;i<*dsrc1;++i){
+    rtl_shri(s,s0,ddest,id_dest->width*8-1);
+    rtl_shli(s,s1,ddest,1);
+    rtl_xor(s,s2,s0,s1);
+  }
+  operand_write(s,id_dest,s2);
+  rtl_set_CF(s,s0);
   print_asm_template2(rol);
 }
 
