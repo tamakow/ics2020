@@ -38,7 +38,7 @@ typedef struct {
 	
 	//eflags
 	struct{
-		uint32_t CF, ZF, SF, IF, OF;
+		uint32_t CF:1, ZF:1, SF:1, IF:1, OF:1;
 	}eflags;
 
 } x86_CPU_state;

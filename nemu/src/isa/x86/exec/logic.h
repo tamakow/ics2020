@@ -76,7 +76,7 @@ static inline def_EHelper(shr) {
 }
 
 static inline def_EHelper(rol) {
-  
+  TODO();
   print_asm_template2(rol);
 }
 
