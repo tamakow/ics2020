@@ -91,6 +91,19 @@ int printf(const char *fmt, ...) {
         putch(fmt[++pre]);
         return_val+=2;
       }
+      else if(fmt[pre] == '0'){ //只为了时钟里的%02d
+        int j=fmt[++pre] - '0';
+        int tmp_num = va_arg(Args,int);
+        char tmp[128]="";
+        zx_itoa(tmp_num,tmp,10);
+        for(int i= strlen(tmp);i<j;++i){
+          return_val++;
+          putch('0');
+        }
+        for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
+        return_val += strlen(tmp);
+        pre++;
+      }
       else {
         printf("to be continue\n");
         assert(0);
