@@ -59,6 +59,11 @@ int printf(const char *fmt, ...) {
         for(int i=0;i<strlen(tmp);++i) putch(tmp[i]);
         return_val += strlen(tmp);
       }
+      else if(fmt[pre] == 'c'){
+        char tmp = va_arg(Args,int);
+        putch(tmp);
+        return_val+=1;
+      }
       else if(fmt[pre] == 'd'){
         int tmp_num = va_arg(Args,int);
         char tmp[128]="";
