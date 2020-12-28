@@ -83,6 +83,11 @@ static inline def_EHelper(rol) {
   }
   operand_write(s,id_dest,s2);
   rtl_set_CF(s,s0);
+  if(*dsrc1 == 1){
+    rtl_shri(s,s1,s2,id_dest->width*8-1);
+    rtl_setrelop(s,RELOP_NE,s2,s0,s1);
+    rtl_set_OF(s,s2);
+  }
   print_asm_template2(rol);
 }
 
