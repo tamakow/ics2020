@@ -3,6 +3,9 @@
 static inline def_EHelper(add) {
   //TODO();
   rtl_add(s,s1,ddest,dsrc1);
+  if (id_dest->width != 4) {
+    rtl_andi(s, s1, s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
   rtl_update_ZFSF(s, s1, id_dest->width);
   rtl_is_add_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s2);
@@ -26,6 +29,9 @@ static inline void cmp_internal(DecodeExecState *s) {
 
 static inline def_EHelper(sub) {
   rtl_sub(s, s1, ddest, dsrc1);      //s1<-dest-src1-
+  if (id_dest->width != 4) {
+    rtl_andi(s, s1, s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
   rtl_update_ZFSF(s, s1, id_dest->width);
   rtl_is_sub_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s2);
