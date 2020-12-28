@@ -38,6 +38,9 @@ static inline def_EHelper(sub) {
 static inline def_EHelper(cmp) {
   //TODO();
   rtl_sub(s,s0,ddest,dsrc1);
+  if (id_dest->width != 4) {
+    rtl_andi(s, s0, s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
   rtl_update_ZFSF(s,s0,id_dest->width);
   rtl_is_sub_overflow(s,s1,s0,ddest,dsrc1,id_dest->width);
   rtl_set_OF(s,s1);
