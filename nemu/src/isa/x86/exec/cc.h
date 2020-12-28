@@ -53,7 +53,7 @@ static inline void rtl_setcc(DecodeExecState *s, rtlreg_t* dest, uint32_t subcod
       rtl_or(s,dest,dest,t0);
       break;
     }
-       //TODO();
+    TODO();
     default: panic("should not reach here");
     case CC_P: panic("PF is not supported");
   }
