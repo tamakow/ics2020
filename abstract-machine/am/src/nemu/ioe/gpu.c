@@ -3,8 +3,8 @@
 #include <klib.h>
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-#define W 400
-#define H 300
+// #define W 400
+// #define H 300
 static inline int min(int x, int y) { return (x < y) ? x : y; }
 
 void __am_gpu_init() {
@@ -19,13 +19,14 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = 0, .height = 0,
+    .width = io_read(AM_GPU_CONFIG).width, .height = io_read(AM_GPU_CONFIG).height,
     .vmemsz = 0
   };
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  /*
+  int W = io_read(AM_GPU_CONFIG).width;
+  int H = io_read(AM_GPU_CONFIG).height;
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   uint32_t *pixels = ctl->pixels;
   int cp_bytes = sizeof(uint32_t) * min(w, W - x);
@@ -34,7 +35,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     memcpy(&fb[(y + j) * W + x], pixels, cp_bytes);
     pixels += w;
   }
-*/
+
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
