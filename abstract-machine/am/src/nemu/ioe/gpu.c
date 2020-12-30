@@ -9,8 +9,8 @@ static inline int min(int x, int y) { return (x < y) ? x : y; }
 
 void __am_gpu_init() {
   int i;
-  int w = io_read(AM_GPU_CONFIG).width;  // TODO: get the correct width
-  int h = io_read(AM_GPU_CONFIG).height;  // TODO: get the correct height
+  int w = io_read(AM_GPU_CONFIG).width / 32;  // TODO: get the correct width
+  int h = io_read(AM_GPU_CONFIG).height / 32;  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
@@ -32,7 +32,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pixels = ctl->pixels;
   int cp_bytes = sizeof(uint32_t) * min(w, W - x);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (int j = 0; j < h && y + j < H; j ++) {
+  for (int j = 0; (j < h) && (y + j < H); j ++) {
     memcpy(&fb[(y + j) * W + x], pixels, cp_bytes);
     pixels += w;
   }
