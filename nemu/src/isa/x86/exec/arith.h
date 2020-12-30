@@ -85,7 +85,7 @@ static inline def_EHelper(dec) {
 }
 
 static inline def_EHelper(neg) {
-  rtl_setrelopi(s,RELOP_EQ,s0,ddest,0);
+  rtl_setrelopi(s,RELOP_NE,s0,ddest,0);
   rtl_set_CF(s,s0);
   rtl_li(s,s0,0);
   rtl_sub(s,s1,s0,ddest);
