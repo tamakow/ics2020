@@ -8,12 +8,14 @@
 static inline int min(int x, int y) { return (x < y) ? x : y; }
 
 void __am_gpu_init() {
+  /*
   int i;
   int w = 400 ;  // TODO: get the correct width
   int h = 300 ;  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
+  */
   
 }
 
@@ -26,10 +28,9 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  /*
   uint32_t tmp = inl(VGACTL_ADDR);
   int W = tmp >> 16;
-  int H = tmp & 0xffffffffffffffff;
+  int H = tmp & 0xffff;
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   uint32_t *pixels = ctl->pixels;
   int cp_bytes = sizeof(uint32_t) * min(w, W - x);
@@ -38,7 +39,6 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     memcpy(&fb[(y + j) * W + x], pixels, cp_bytes);
     pixels += w;
   }
-  */
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
