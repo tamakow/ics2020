@@ -1,10 +1,21 @@
 #include "cc.h"
 
 static inline def_EHelper(add) {
-  TODO();
+  //TODO();
+  rtl_add(s,s1,ddest,dsrc1);
+  if (id_dest->width != 4) {
+    rtl_andi(s, s1, s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+  rtl_update_ZFSF(s, s1, id_dest->width);
+  rtl_is_add_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
+  rtl_set_OF(s, s2);
+  rtl_is_add_carry(s, s0, s1, ddest);
+  rtl_set_CF(s, s0);
+  operand_write(s, id_dest, s1);
   print_asm_template2(add);
 }
 
+/*
 // dest <- sub result
 static inline void cmp_internal(DecodeExecState *s) {
   rtl_sub(s, s0, ddest, dsrc1);
@@ -14,28 +25,74 @@ static inline void cmp_internal(DecodeExecState *s) {
   rtl_is_sub_overflow(s, s1, s0, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s1);
 }
- 
+*/ 
 
 static inline def_EHelper(sub) {
-  TODO();
+  rtl_sub(s, s1, ddest, dsrc1);      //s1<-dest-src1-
+  if (id_dest->width != 4) {
+    rtl_andi(s, s1, s1, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+  rtl_update_ZFSF(s, s1, id_dest->width);
+  rtl_is_sub_overflow(s, s2, s1, ddest, dsrc1, id_dest->width);
+  rtl_set_OF(s, s2);
+  rtl_is_sub_carry(s, s0, ddest, dsrc1);
+  rtl_set_CF(s, s0);
+  operand_write(s, id_dest, s1);
+  print_asm_template2(sub);
 }
 
 static inline def_EHelper(cmp) {
-  TODO();
+  //TODO();
+  rtl_sub(s,s0,ddest,dsrc1);
+  if (id_dest->width != 4) {
+    rtl_andi(s, s0, s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+  rtl_update_ZFSF(s,s0,id_dest->width);
+  rtl_is_sub_overflow(s,s1,s0,ddest,dsrc1,id_dest->width);
+  rtl_set_OF(s,s1);
+  rtl_is_sub_carry(s, s1, ddest, dsrc1);
+  rtl_set_CF(s, s1);
+  print_asm_template2(cmp);
 }
 
-static inline def_EHelper(inc) {
-  TODO();
+static inline def_EHelper(inc) { //可能标志位有问题，注意一下
+  //TODO();
+  rtl_addi(s,s0,ddest,1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
+  //OF =1 只在符号位相同的两数相加得到了符号位不同的
+  rtl_xori(s,s1,ddest,1);
+  rtl_not(s,s1,s1);
+  rtl_xor(s,s2,ddest,s0);
+  rtl_and(s,s1,s1,s2);
+  rtl_msb(s,s1,s1,id_dest->width);
+  rtl_set_OF(s,s1);
+  operand_write(s,id_dest,s0);
   print_asm_template1(inc);
 }
 
 static inline def_EHelper(dec) {
-  TODO();
+  //TODO();
+  rtl_subi(s,s0,ddest,1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
+  //OF =1 只在符号位不同的两数相减得到了与被减数符号位不同的就诶过
+  rtl_xori(s,s1,ddest,1);
+  rtl_xor(s,s2,ddest,s0);
+  rtl_and(s,s1,s1,s2);
+  rtl_msb(s,s1,s1,id_dest->width);
+  rtl_set_OF(s,s1);
+  operand_write(s,id_dest,s0);
   print_asm_template1(dec);
 }
 
 static inline def_EHelper(neg) {
-  TODO();
+  rtl_setrelopi(s,RELOP_NE,s0,ddest,0);
+  rtl_set_CF(s,s0);
+  rtl_li(s,s0,0);
+  rtl_sub(s,s1,s0,ddest);
+  operand_write(s,id_dest,s1);
+  rtl_update_ZFSF(s,s1,id_dest->width);
+  rtl_is_sub_overflow(s,s0,s1,s0,ddest,id_dest->width);
+  rtl_set_OF(s,s0);
   print_asm_template1(neg);
 }
 

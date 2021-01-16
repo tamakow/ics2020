@@ -2,46 +2,93 @@
 
 
 static inline def_EHelper(test) {
-  TODO();
+  //  TODO();
+  rtl_and(s,s0,ddest,dsrc1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
+  rtl_li(s,s1,0);
+  rtl_set_OF(s,s1);
+  rtl_set_CF(s,s1);
   print_asm_template2(test);
 }
 
 static inline def_EHelper(and) {
-  TODO();
+  //TODO();
+  rtl_and(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+
+  //CF = 0, OF = 0
+  rtl_li(s,s1,0);
+  rtl_set_CF(s,s1);
+  rtl_set_OF(s,s1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
+
   print_asm_template2(and);
 }
 
 static inline def_EHelper(xor) {
-  TODO();
-
+  //TODO();
+  rtl_xor(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_li(s,s1,0);
+  rtl_set_OF(s,s1);
+  rtl_set_CF(s,s1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
   print_asm_template2(xor);
 }
 
 static inline def_EHelper(or) {
-  TODO();
-
+  //TODO();
+  rtl_or(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_li(s,s1,0);
+  rtl_set_OF(s,s1);
+  rtl_set_CF(s,s1);
+  rtl_update_ZFSF(s,s0,id_dest->width);
   print_asm_template2(or);
 }
 
 static inline def_EHelper(sar) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_sext(s,ddest,ddest,id_dest->width);
+  rtl_sar(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_update_ZFSF(s,s0,id_dest->width);
   print_asm_template2(sar);
 }
 
 static inline def_EHelper(shl) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_shl(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_update_ZFSF(s,s0,id_dest->width);
   print_asm_template2(shl);
 }
 
 static inline def_EHelper(shr) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_shr(s,s0,ddest,dsrc1);
+  operand_write(s,id_dest,s0);
+  rtl_update_ZFSF(s,s0,id_dest->width);
   print_asm_template2(shr);
+}
+
+static inline def_EHelper(rol) {
+  for(int i=0;i<*dsrc1;++i){
+    rtl_shri(s,s0,ddest,id_dest->width*8-1);
+    rtl_shli(s,s1,ddest,1);
+    rtl_add(s,s2,s1,s0);
+  }
+  operand_write(s,id_dest,s2);
+  rtl_set_CF(s,s0);
+  if(*dsrc1 == 1){ // 没有测试是否正确
+    rtl_shri(s,s1,s2,id_dest->width*8-1);
+    rtl_setrelop(s,RELOP_NE,s2,s0,s1);
+    rtl_set_OF(s,s2);
+  }
+  print_asm_template2(rol);
 }
 
 
@@ -54,8 +101,9 @@ static inline def_EHelper(setcc) {
 }
 
 static inline def_EHelper(not) {
-  TODO();
-
+  //TODO();
+  rtl_not(s,s0,ddest);
+  operand_write(s,id_dest,s0);
   print_asm_template1(not);
 }
 

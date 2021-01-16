@@ -1,5 +1,12 @@
 #include <monitor/difftest.h>
 
+uint32_t pio_read_l(ioaddr_t);
+uint32_t pio_read_w(ioaddr_t);
+uint32_t pio_read_b(ioaddr_t);
+void pio_write_l(ioaddr_t, uint32_t);
+void pio_write_w(ioaddr_t, uint32_t);
+void pio_write_b(ioaddr_t, uint32_t);
+
 static inline def_EHelper(lidt) {
   TODO();
 
@@ -42,21 +49,27 @@ static inline def_EHelper(iret) {
 #endif
 }
 
-uint32_t pio_read_l(ioaddr_t);
-uint32_t pio_read_w(ioaddr_t);
-uint32_t pio_read_b(ioaddr_t);
-void pio_write_l(ioaddr_t, uint32_t);
-void pio_write_w(ioaddr_t, uint32_t);
-void pio_write_b(ioaddr_t, uint32_t);
+//IN OUT 都有问题
 
 static inline def_EHelper(in) {
-  TODO();
-
+  //TODO();
+  switch(id_dest->width){
+    case 4: rtl_li(s,s0,pio_read_l(*dsrc1)); break;
+    case 2: rtl_li(s,s0,pio_read_w(*dsrc1)); break;
+    case 1: rtl_li(s,s0,pio_read_b(*dsrc1)); break;
+    default: assert(0);
+  }
+  operand_write(s,id_dest,s0);
   print_asm_template2(in);
 }
 
 static inline def_EHelper(out) {
-  TODO();
-
+  //TODO();
+  switch(id_dest->width){
+    case 4: pio_write_l(*ddest,*dsrc1); break;
+    case 2: pio_write_w(*ddest,*dsrc1); break;
+    case 1: pio_write_b(*ddest,*dsrc1); break;
+    default: assert(0);
+  }
   print_asm_template2(out);
 }
