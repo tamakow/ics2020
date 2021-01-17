@@ -41,6 +41,8 @@ char* zx_itoa(int num,char* str,int radix){
   return str;
 }
 
+//printf 的 %p %0 有问题 
+
 int printf(const char *fmt, ...) {
   int len = strlen(fmt);
   int pre=0;
@@ -84,7 +86,7 @@ int printf(const char *fmt, ...) {
         for(int i= j-1;i>=0;--i) putch(tmp[i]);
         return_val += strlen(tmp);
       }
-      else if(fmt[pre] == 'x'){
+      else if(fmt[pre] == 'x' || fmt[pre] == 'p'){ //这里p是不对的，因为应该是指针地址
         unsigned tmp_num = va_arg(Args,unsigned);
         char tmp[128]="";
         zx_itoa(tmp_num,tmp,16);
