@@ -36,15 +36,28 @@ typedef struct {
 	};
 	vaddr_t pc;
 	
-	//eflags
-	struct{
-		uint32_t CF;//:1;
-		uint32_t ZF;//:1;
-		uint32_t SF;//:1;
-		uint32_t IF;//:1;
-		uint32_t OF;//:1;
+	//eflags 位域从ics课本中得到
+	union{
+		struct{
+			uint32_t CF:1;
+			unsigned:5;
+			uint32_t ZF:1;
+			uint32_t SF:1;
+			unsigned:1;
+			uint32_t IF:1;
+			unsigned:1;
+			uint32_t OF:1;
+		};
+		uint32_t val;
 	}eflags;
 
+	//sr
+	uint32_t cs; //代码段寄存器
+	struct{
+		uint16_t limit;
+		uint32_t base;
+	}idtr; 
+	
 } x86_CPU_state;
 
 // decode
