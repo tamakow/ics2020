@@ -6,7 +6,7 @@ uint32_t pio_read_b(ioaddr_t);
 void pio_write_l(ioaddr_t, uint32_t);
 void pio_write_w(ioaddr_t, uint32_t);
 void pio_write_b(ioaddr_t, uint32_t);
-
+void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 static inline def_EHelper(lidt) {
   // TODO();
   cpu.idtr.limit = vaddr_read(*ddest,2);
@@ -31,8 +31,10 @@ static inline def_EHelper(mov_cr2r) {
 }
 
 static inline def_EHelper(int) {
-  TODO();
-
+  //TODO();
+  if(s->opcode == 0xcc) raise_intr(s,0x3, s->seq_pc);
+  else if(s->opcode == 0xce) raise_intr(s,0x4, s->seq_pc);
+  else raise_intr(s,*ddest, s->seq_pc);
   print_asm("int %s", id_dest->str);
 
 #ifndef __DIFF_REF_NEMU__
