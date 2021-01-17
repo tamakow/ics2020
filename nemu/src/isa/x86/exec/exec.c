@@ -277,7 +277,7 @@ again:
     IDEXW(0xca, I, ret, 2)
     // EX   (0xcb, ret)
     // EX   (0xcc, int)
-    // IDEXW(0xcd, I, int, 1)
+    IDEXW(0xcd, I, int, 1)
     // EX   (0xce, int)
     // EX   (0xcf, iret)
     IDEXW(0xd0, gp2_1_E, gp2, 1)
