@@ -110,7 +110,7 @@ int printf(const char *fmt, ...) {
         pre++;
       }
       else {
-        printf("to be continue\n");
+        printf("TBD\n");
         assert(0);
       }
       pre++;
