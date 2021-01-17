@@ -111,7 +111,7 @@ int printf(const char *fmt, ...) {
       }
       else {
         printf("TO BE DONE\n");
-        printf("%d\n",fmt[pre]);
+        printf("%c\n",fmt[pre]);
         assert(0);
       }
       pre++;
