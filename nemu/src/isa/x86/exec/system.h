@@ -12,6 +12,7 @@ static inline def_EHelper(lidt) {
   rtl_li(s,s0,*ddest);
   cpu.idtr.limit=vaddr_read(*s0,2);
   rtl_li(s,&cpu.idtr.base, vaddr_read(*s0+2,4));
+  printf("base is 0x%x\n",cpu.idtr.base);
   print_asm_template1(lidt);
 }
 
