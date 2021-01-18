@@ -9,7 +9,8 @@ void pio_write_b(ioaddr_t, uint32_t);
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 static inline def_EHelper(lidt) {
   // TODO();
-  rtl_lm(s,s0,ddest,0,id_dest->width);
+  // rtl_lm(s,s0,ddest,0,id_dest->width);
+  rtl_li(s,s0,*ddest);
   printf("addr = 0x%x\n s0 is 0x%x",*ddest,*s0);
   cpu.idtr.limit=vaddr_read(*s0,2);
   rtl_li(s,&cpu.idtr.base, vaddr_read(*s0+2,4));
