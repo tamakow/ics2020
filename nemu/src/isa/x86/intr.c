@@ -16,8 +16,8 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
 
   uint32_t off_h = vaddr_read(addr+4,4);
   uint32_t off_l = vaddr_read(addr,4);
-  uint32_t p = vaddr_read(addr+5,1) >> 7;
-  if(!p) assert(0);
+  // uint32_t p = vaddr_read(addr+5,1) >> 7;
+  // if(!p) assert(0);
   
   uint32_t offset = (off_h&0xffff0000) | (off_l&0xffff);
   printf("0x%x",offset);
