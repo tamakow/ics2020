@@ -33,6 +33,7 @@ static inline def_EHelper(mov_cr2r) {
 
 static inline def_EHelper(int) {
   //TODO();
+  printf("%d",*ddest);
   if(s->opcode == 0xcc) raise_intr(s,0x3, s->seq_pc);
   else if(s->opcode == 0xce) raise_intr(s,0x4, s->seq_pc);
   else raise_intr(s,*ddest, s->seq_pc);
