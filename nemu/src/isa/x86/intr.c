@@ -13,7 +13,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   cpu.eflags.IF = 0;
 
   uint32_t addr = cpu.idtr.base + NO*8;
-
+  printf("addr is %x\n",addr);
   uint32_t off_h = vaddr_read(addr+6,2);
   uint32_t off_l = vaddr_read(addr,2);
   uint32_t p = vaddr_read(addr+5,1) >> 7;
