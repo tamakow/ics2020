@@ -9,8 +9,9 @@ void pio_write_b(ioaddr_t, uint32_t);
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 static inline def_EHelper(lidt) {
   // TODO();
-  cpu.idtr.limit = vaddr_read(*ddest,2);
-  cpu.idtr.base = vaddr_read(*ddest+2,4);
+  rtl_li(s,s0,*ddest);
+  cpu.idtr.limit=vaddr_read(*s0,2);
+  rtl_li(s,&cpu.idtr.base, vaddr_read(*s0+2,4));
   print_asm_template1(lidt);
 }
 
