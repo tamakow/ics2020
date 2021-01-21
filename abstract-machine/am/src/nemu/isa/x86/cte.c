@@ -43,7 +43,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   idt[0x81] = GATE32(STS_TG, KSEL(SEG_KCODE), __am_vectrap, DPL_KERN);
 
   void* addr = set_idt(idt, sizeof(idt));
-  printf("%x\n",&addr);
+  printf("ad is %x\n",&addr);
   // register event handler
   user_handler = handler;
 
