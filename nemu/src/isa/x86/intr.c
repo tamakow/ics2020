@@ -21,7 +21,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   if(!p) assert(0);
   
   // uint32_t offset = (off_h&0xffff0000) | (off_l&0xffff);
-  uint32_t offset = (off_h << 16) + off_l;
+  uint32_t offset = (off_h << 16) | off_l;
   // printf("0x%x",offset);
   rtl_j(s,offset);
 }
