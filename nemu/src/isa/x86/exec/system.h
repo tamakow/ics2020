@@ -10,7 +10,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 static inline def_EHelper(lidt) {
   // TODO();
   // rtl_lm(s,s0,ddest,0,id_dest->width);
-  rtl_li(s,s0,*(uint32_t*)ddest);
+  rtl_li(s,s0,id_dest->val);
   printf("addr = 0x%x\n s0 is 0x%x\n",*ddest,*s0);
   cpu.idtr.limit=vaddr_read(*s0,2);
   printf("limit is 0x%x\n",cpu.idtr.limit);
