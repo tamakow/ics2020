@@ -11,11 +11,11 @@ static inline def_EHelper(lidt) {
   // TODO();
   // rtl_lm(s,s0,ddest,0,id_dest->width);
   rtl_li(s,s0,*s->isa.mbase+s->isa.moff);
-  printf("addr = 0x%x\n s0 is 0x%x\n",*ddest,*s0);
+  // printf("addr = 0x%x\n s0 is 0x%x\n",*ddest,*s0);
   cpu.idtr.limit=vaddr_read(*s0,2);
-  printf("limit is 0x%x\n",cpu.idtr.limit);
+  // printf("limit is 0x%x\n",cpu.idtr.limit);
   rtl_li(s,&cpu.idtr.base, vaddr_read(*s0+2,4));
-  printf("base is 0x%x\n",cpu.idtr.base);
+  // printf("base is 0x%x\n",cpu.idtr.base);
   print_asm_template1(lidt);
 }
 
@@ -37,7 +37,7 @@ static inline def_EHelper(mov_cr2r) {
 
 static inline def_EHelper(int) {
   //TODO();
-  printf("operand is %d\n",*ddest);
+  // printf("operand is %d\n",*ddest);
   if(s->opcode == 0xcc) raise_intr(s,0x3, s->seq_pc);
   else if(s->opcode == 0xce) raise_intr(s,0x4, s->seq_pc);
   else raise_intr(s,*ddest, s->seq_pc);

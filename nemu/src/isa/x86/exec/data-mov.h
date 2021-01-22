@@ -17,14 +17,29 @@ static inline def_EHelper(pop) {
 }
 
 static inline def_EHelper(pusha) {
-  TODO();
-
+  // TODO();
+  rtl_mv(s,s0,&cpu.esp);
+  rtl_push(s,&cpu.eax);
+	rtl_push(s,&cpu.ecx);
+	rtl_push(s,&cpu.edx);
+	rtl_push(s,&cpu.ebx);
+	rtl_push(s,s0);
+	rtl_push(s,&cpu.ebp);
+	rtl_push(s,&cpu.esi);
+	rtl_push(s,&cpu.edi);
   print_asm("pusha");
 }
 
 static inline def_EHelper(popa) {
-  TODO();
-
+  // TODO();
+  rtl_pop(s,&cpu.edi);
+  rtl_pop(s,&cpu.esi);
+  rtl_pop(s,&cpu.ebp);
+  rtl_pop(s,s0);
+  rtl_pop(s,&cpu.ebx);
+  rtl_pop(s,&cpu.edx);
+  rtl_pop(s,&cpu.ecx);
+  rtl_pop(s,&cpu.eax);
   print_asm("popa");
 }
 
