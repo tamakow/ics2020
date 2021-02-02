@@ -8,14 +8,11 @@ void pio_write_w(ioaddr_t, uint32_t);
 void pio_write_b(ioaddr_t, uint32_t);
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 static inline def_EHelper(lidt) {
-  // TODO();
-  // rtl_lm(s,s0,ddest,0,id_dest->width);
+  cpu.idtr.limit = (*ddest) >> 16;
   rtl_li(s,s0,*s->isa.mbase+s->isa.moff);
-  // printf("addr = 0x%x\n s0 is 0x%x\n",*ddest,*s0);
-  cpu.idtr.limit=vaddr_read(*s0,2);
-  // printf("limit is 0x%x\n",cpu.idtr.limit);
-  rtl_li(s,&cpu.idtr.base, vaddr_read(*s0+2,4));
-  // printf("base is 0x%x\n",cpu.idtr.base);
+  if(s->isa.is_operand_size_16)
+    cpu.idtr.base = vaddr_read(*s0+2,4)&0xffffff;
+  else  cpu.idtr.base = vaddr_read(*s0+2,4);
   print_asm_template1(lidt);
 }
 
