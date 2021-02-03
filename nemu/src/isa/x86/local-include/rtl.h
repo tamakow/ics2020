@@ -28,17 +28,24 @@ static inline def_rtl(push, const rtlreg_t* src1) {
   // esp <- esp - 4
   // M[esp] <- src1
   //TODO();
-  rtl_subi(s,&cpu.esp,&cpu.esp,4);
+  int width = (s->isa.is_operand_size_16)? 2 : 4;
+  if (ddest == &cpu.esp) {
+    vaddr_write(cpu.esp - width, *src1, width);
+    rtl_subi(s,&cpu.esp,&cpu.esp,width);
+  } else {
+    rtl_subi(s,&cpu.esp,&cpu.esp,width);
+    vaddr_write(cpu.esp, *src1, width);
+  }
   //cpu.esp-=4; 
-  rtl_sm(s,&cpu.esp,0,src1,4);
 }
 
 static inline def_rtl(pop, rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
   //TODO();
-  rtl_lm(s,dest,&cpu.esp,0,4);
-  rtl_addi(s,&cpu.esp,&cpu.esp,4);
+  int width = (s->isa.is_operand_size_16)? 2 : 4;
+  *dest = vaddr_read(cpu.esp, width);
+  rtl_addi(s,&cpu.esp,&cpu.esp,width);
   // cpu.esp+=4; 
 }
 
