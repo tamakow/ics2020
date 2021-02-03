@@ -214,7 +214,7 @@ again:
     IDEX (0x68, push_SI, push)
     IDEX (0x69, I_E2G, imul3)
     IDEXW(0x6a, push_SI, push, 1)
-    // IDEXW(0x6b, I_E2G, imul3, 1)
+    IDEXW(0x6b, I_E2G, imul3, 1)
     //jcc (jmp if condition is met)
     IDEXW(0x70, J, jcc, 1)
     IDEXW(0x71, J, jcc, 1)
@@ -251,7 +251,8 @@ again:
     IDEX (0xa1, O2a, mov)
     IDEXW(0xa2, a2O, mov, 1)
     IDEX (0xa3, a2O, mov)
-    EX   (0xa4, movsb)
+    EXW  (0xa4, movsb, 1)
+    EX   (0xa5, movsb)
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)
     IDEXW(0xb0, mov_I2r, mov, 1)
@@ -293,7 +294,7 @@ again:
     IDEX (0xe7, out_a2I, out)
     IDEX (0xe8 , J, call) // call rel32
     IDEX (0xe9, J, jmp)
-    IDEX (0xea, I, jmp_rm) //!!!!
+    // IDEX (0xea, I, jmp_rm) //!!!!
     IDEXW(0xeb, J, jmp, 1)
     IDEXW(0xec, in_dx2a, in, 1)
     IDEX (0xed, in_dx2a, in)
