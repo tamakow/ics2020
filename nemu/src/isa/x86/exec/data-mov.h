@@ -88,10 +88,11 @@ static inline def_EHelper(movsx) {
 }
 
 static inline def_EHelper(movsb) {
-  rtl_lm(s,s0,&cpu.esi,0,1);
-  rtl_sm(s,&cpu.edi,0,s0,1);
-  cpu.esi++;
-  cpu.edi++;
+  rtl_li(s,s1,s->dest.width);
+  rtl_lm(s,s0,&cpu.esi,0,*s1);
+  rtl_sm(s,&cpu.edi,0,s0,*s1);
+  cpu.esi += *s1;
+  cpu.edi += *s1;
   print_asm("movsb");
 }
 
@@ -99,6 +100,12 @@ static inline def_EHelper(movzx) {
   id_dest->width = s->isa.is_operand_size_16 ? 2 : 4;
   operand_write(s, id_dest, dsrc1);
   print_asm_template2(movzx);
+}
+
+static inline def_EHelper(xchg) {
+  *s0 = *ddest;
+  operand_write(s, id_dest, dsrc1);
+  operand_write(s, id_src1, s0);
 }
 
 static inline def_EHelper(lea) {

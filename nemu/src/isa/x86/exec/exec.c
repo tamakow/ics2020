@@ -29,7 +29,7 @@ static inline def_EHelper(gp2) {
 /* 0xf6, 0xf7 */
 static inline def_EHelper(gp3) {
   switch (s->isa.ext_opcode) {
-    IDEXW(0, test_I, test, -1) EMPTY(1) EXW(2, not,-1) EXW(3, neg, -1)
+    IDEXW(0, test_I, test, id_dest->width) EMPTY(1) EXW(2, not,-1) EXW(3, neg, -1)
     EXW(4,mul,-1) EXW(5, imul1,-1) EXW(6,div,-1) EXW(7, idiv,-1)
   }
 }
@@ -239,12 +239,21 @@ again:
     //test
     IDEXW (0x84, G2E, test, 1);
     IDEX (0X85, G2E, test);
+
+    IDEX (0x86, G2E, xchg)
     IDEXW(0x88, mov_G2E, mov, 1)
     IDEX (0x89, mov_G2E, mov)
     IDEXW(0x8a, mov_E2G, mov, 1)
     IDEX (0x8b, mov_E2G, mov)
     IDEX (0x8d, lea_M2G, lea) //lea
     EX   (0x90, nop) //nop
+    IDEX (0x91, xchg_a2r, xchg)
+    IDEX (0x92, xchg_a2r, xchg)
+    IDEX (0x93, xchg_a2r, xchg)
+    IDEX (0x94, xchg_a2r, xchg)
+    IDEX (0x95, xchg_a2r, xchg)
+    IDEX (0x96, xchg_a2r, xchg)
+    IDEX (0x97, xchg_a2r, xchg)
     EX   (0x98, cwtl);
     EX   (0x99, cltd)
     IDEXW(0xa0, O2a, mov, 1)
